@@ -5,7 +5,7 @@
             <p class="text-gray-500 text-sm mt-1">Sampaikan keluhan atau aspirasi kamu dengan jelas</p>
         </div>
 
-        <form method="POST" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <form method="POST" action="{{ route('pengaduan.store') }}" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
             @csrf
 
             <div class="mb-5">
