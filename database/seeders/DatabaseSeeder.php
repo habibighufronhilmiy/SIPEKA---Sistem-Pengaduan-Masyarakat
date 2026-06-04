@@ -11,30 +11,27 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
+        User::firstOrCreate(['email' => 'admin@sipeka.test'], [
             'name' => 'Admin SIPEKA',
             'username' => 'admin',
-            'email' => 'admin@sipeka.test',
             'password' => Hash::make('password'),
             'telepon' => '081234567890',
             'alamat' => 'Kantor Desa',
             'role' => 'admin',
         ]);
 
-        User::create([
+        User::firstOrCreate(['email' => 'petugas1@sipeka.test'], [
             'name' => 'Petugas 1',
             'username' => 'petugas1',
-            'email' => 'petugas1@sipeka.test',
             'password' => Hash::make('password'),
             'telepon' => '081234567891',
             'alamat' => 'Kantor Desa',
             'role' => 'petugas',
         ]);
 
-        User::create([
+        User::firstOrCreate(['email' => 'masyarakat1@sipeka.test'], [
             'name' => 'Masyarakat 1',
             'username' => 'masyarakat1',
-            'email' => 'masyarakat1@sipeka.test',
             'password' => Hash::make('password'),
             'telepon' => '081234567892',
             'alamat' => 'RT 01 RW 01',
@@ -51,7 +48,7 @@ class DatabaseSeeder extends Seeder
         ];
 
         foreach ($kategoris as $k) {
-            Kategori::create($k);
+            Kategori::firstOrCreate(['slug' => $k['slug']], $k);
         }
     }
 }
