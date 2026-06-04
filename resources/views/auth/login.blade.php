@@ -11,12 +11,12 @@
         .auth-grad { background: linear-gradient(135deg, #0f5fea 0%, #10b981 100%); }
     </style>
 </head>
-<body class="min-h-screen flex auth-grad relative overflow-hidden">
-    <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 25% 25%, white 1px, transparent 1px); background-size: 40px 40px;"></div>
-    <div class="absolute top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-10 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl"></div>
+<body class="min-h-screen flex items-start justify-center auth-grad relative overflow-y-auto py-6">
+    <div class="fixed inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 25% 25%, white 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div class="fixed top-10 left-10 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="fixed bottom-10 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
 
-    <div class="relative m-auto w-full max-w-md px-4 py-8">
+    <div class="w-full max-w-md px-4">
         <a href="{{ route('landing') }}" class="flex items-center justify-center gap-3 mb-8">
             <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-12 w-12 rounded-full ring-4 ring-white/30">
             <span class="text-white text-3xl font-extrabold tracking-tight">SIPEKA</span>
