@@ -4,7 +4,7 @@
             <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">👤 Tambah User</h1>
             <p class="text-gray-500 text-sm mt-1">Buat akun baru untuk petugas atau admin</p>
         </div>
-        <form method="POST" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <form method="POST" action="{{ route('admin.users.store') }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
             @csrf
             <div class="grid md:grid-cols-2 gap-5">
                 <div><label class="block text-sm font-bold text-gray-700 mb-1.5">Nama</label><input type="text" name="name" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition"></div>

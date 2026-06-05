@@ -4,7 +4,7 @@
         <p class="text-gray-500 text-sm mt-1">Filter dan export data pengaduan</p>
     </div>
 
-    <form class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
+    <form method="GET" action="{{ route('admin.laporan') }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-6">
         <div class="grid md:grid-cols-4 gap-4 mb-4">
             <div><label class="block text-sm font-bold text-gray-700 mb-1.5">Kategori</label>
                 <select name="kategori" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white text-sm focus:ring-2 focus:ring-primary-500">
@@ -18,6 +18,7 @@
                 <select name="status" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl bg-white text-sm focus:ring-2 focus:ring-primary-500">
                     <option value="">Semua</option>
                     <option value="menunggu" {{ request('status') == 'menunggu' ? 'selected' : '' }}>Menunggu</option>
+                    <option value="diverifikasi" {{ request('status') == 'diverifikasi' ? 'selected' : '' }}>Diverifikasi</option>
                     <option value="diproses" {{ request('status') == 'diproses' ? 'selected' : '' }}>Diproses</option>
                     <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
                     <option value="ditolak" {{ request('status') == 'ditolak' ? 'selected' : '' }}>Ditolak</option>
@@ -54,8 +55,8 @@
                         <tr class="border-t border-gray-100">
                             <td class="p-4 text-sm text-gray-600 font-semibold">{{ $i + 1 }}</td>
                             <td class="p-4 font-semibold text-gray-900">{{ $p->judul }}</td>
-                            <td class="p-4 text-sm text-gray-600">{{ $p->user->name }}</td>
-                            <td class="p-4 text-sm text-gray-600">{{ $p->kategori->nama_kategori }}</td>
+                            <td class="p-4 text-sm text-gray-600">{{ $p->user?->name ?? '-' }}</td>
+                            <td class="p-4 text-sm text-gray-600">{{ $p->kategori?->nama_kategori ?? '-' }}</td>
                             <td class="p-4"><span class="text-xs px-2.5 py-1 rounded-full font-semibold
                                 @if($p->status == 'menunggu') bg-yellow-100 text-yellow-700
                                 @elseif($p->status == 'diproses') bg-indigo-100 text-indigo-700

@@ -1,0 +1,2 @@
+@echo off
+railway variable set --service SIPEKA---Sistem-Pengaduan-Masyarakat DB_HOST=${{MySQL.MYSQLHOST}} DB_PORT=${{MySQL.MYSQLPORT}} DB_DATABASE=${{MySQL.MYSQLDATABASE}} DB_USERNAME=${{MySQL.MYSQLUSER}} DB_PASSWORD=${{MySQL.MYSQLPASSWORD}}

@@ -185,6 +185,7 @@
 
     <div id="sidebarOverlay" class="fixed inset-0 bg-black/30 z-30 hidden lg:hidden"></div>
 
+    @stack('scripts')
     <script>
         document.getElementById('sidebarToggle')?.addEventListener('click', function() {
             document.getElementById('sidebar').classList.toggle('-translate-x-full');

@@ -58,7 +58,7 @@
                 </div>
 
                 <h2 class="font-extrabold text-xl text-gray-900 mb-2">{{ $pengaduan->judul }}</h2>
-                <p class="text-sm text-gray-400 mb-4">{{ $pengaduan->kategori->nama_kategori }} &middot; {{ $pengaduan->created_at->format('d/m/Y H:i') }}</p>
+                <p class="text-sm text-gray-400 mb-4">{{ $pengaduan->kategori?->nama_kategori ?? '-' }} &middot; {{ $pengaduan->created_at->format('d/m/Y H:i') }}</p>
                 <p class="text-gray-700 mb-6">{{ $pengaduan->isi_laporan }}</p>
 
                 @if ($pengaduan->media->count() > 0)
