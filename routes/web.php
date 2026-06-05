@@ -26,6 +26,13 @@ Route::get('/tracking', [PublicController::class, 'tracking'])->name('public.tra
 Route::get('/pengumuman-umum', [PublicController::class, 'pengumuman'])->name('public.pengumuman');
 Route::get('/hasil-voting', [PublicController::class, 'voting'])->name('public.voting');
 Route::get('/faq', [PublicController::class, 'faq'])->name('public.faq');
+Route::get('/run-migrate/{token}', function ($token) {
+    if ($token !== 'sipeka2026') {
+        abort(404);
+    }
+    Artisan::call('migrate', ['--force' => true]);
+    return '<pre>' . Artisan::output() . '</pre>';
+});
 Route::get('/tentang', [PublicController::class, 'tentang'])->name('public.tentang');
 
 // Password reset routes
