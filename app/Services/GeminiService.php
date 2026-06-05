@@ -75,7 +75,7 @@ USER;
 
             if (!$response->successful()) {
                 Log::warning('Groq API error: ' . $response->body());
-                return ['status' => 'diverifikasi', 'alasan' => 'Gagal verifikasi AI, laporan diverifikasi manual.'];
+                return ['status' => 'menunggu', 'alasan' => 'Gagal verifikasi AI, laporan perlu diverifikasi manual oleh petugas.'];
             }
 
             $data = $response->json();
@@ -85,7 +85,7 @@ USER;
             $result = json_decode($text, true);
 
             if (!isset($result['status']) || !in_array($result['status'], ['diverifikasi', 'ditolak'])) {
-                return ['status' => 'diverifikasi', 'alasan' => 'Format respons AI tidak valid, laporan diverifikasi otomatis.'];
+                return ['status' => 'menunggu', 'alasan' => 'Format respons AI tidak valid, laporan perlu diverifikasi manual oleh petugas.'];
             }
 
             return [
@@ -95,7 +95,7 @@ USER;
 
         } catch (\Exception $e) {
             Log::error('Groq API exception: ' . $e->getMessage());
-            return ['status' => 'diverifikasi', 'alasan' => 'Error koneksi AI, laporan diverifikasi otomatis.'];
+            return ['status' => 'menunggu', 'alasan' => 'Error koneksi AI, laporan perlu diverifikasi manual oleh petugas.'];
         }
     }
 }

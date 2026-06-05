@@ -109,6 +109,33 @@
                     </div>
                 @endif
 
+                @if ($pengaduan->status === 'menunggu')
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+                        <h2 class="font-extrabold text-lg text-gray-900 mb-4">🔍 Verifikasi Pengaduan</h2>
+                        <p class="mb-4 text-gray-500 text-sm">AI gagal memverifikasi laporan ini. Lakukan verifikasi manual.</p>
+                        <div class="space-y-3">
+                            <form method="POST" action="{{ route('petugas.pengaduan.verifikasi', $pengaduan) }}">
+                                @csrf
+                                <input type="hidden" name="status" value="diverifikasi">
+                                <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-primary-500/20 transition">
+                                    <svg class="w-5 h-5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                    Verifikasi & Terima
+                                </button>
+                            </form>
+                            <form method="POST" action="{{ route('petugas.pengaduan.verifikasi', $pengaduan) }}" onsubmit="return confirm('Yakin tolak pengaduan ini?')">
+                                @csrf
+                                <input type="hidden" name="status" value="ditolak">
+                                <div class="flex gap-2">
+                                    <input type="text" name="alasan" placeholder="Alasan penolakan..." required class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-red-500 bg-gray-50/50 transition text-sm">
+                                    <button type="submit" class="px-6 py-3 bg-red-500 text-white rounded-xl font-bold hover:bg-red-600 transition whitespace-nowrap">
+                                        Tolak
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                @endif
+
                 @if ($pengaduan->status === 'diverifikasi')
                     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                         <h2 class="font-extrabold text-lg text-gray-900 mb-4">🚀 Proses Pengaduan</h2>

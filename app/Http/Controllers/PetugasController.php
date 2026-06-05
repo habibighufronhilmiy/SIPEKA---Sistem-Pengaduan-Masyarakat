@@ -43,6 +43,10 @@ class PetugasController extends Controller
 
     public function verifikasi(Request $request, Pengaduan $pengaduan)
     {
+        if ($pengaduan->status !== 'menunggu') {
+            return back()->with('error', 'Pengaduan sudah diverifikasi oleh AI dan tidak bisa diubah manual.');
+        }
+
         $request->validate([
             'status' => 'required|in:diverifikasi,ditolak',
             'alasan' => 'required_if:status,ditolak|string',
