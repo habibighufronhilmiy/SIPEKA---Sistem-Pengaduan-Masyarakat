@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto">
         <h1 class="text-2xl font-bold mb-6">Buat Voting Baru</h1>
-        <form method="POST" class="bg-white rounded-xl shadow-sm border p-6">
+        <form method="POST" action="{{ route('voting.store') }}" class="bg-white rounded-xl shadow-sm border p-6">
             @csrf
             <div class="mb-4">
                 <label class="block text-sm font-medium mb-1">Pertanyaan</label>

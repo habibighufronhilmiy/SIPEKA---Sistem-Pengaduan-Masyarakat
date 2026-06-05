@@ -67,10 +67,11 @@
                     @if ($pengaduan->tanggapans->count() > 0)
                         <div class="mt-6 space-y-4">
                             @foreach ($pengaduan->tanggapans as $t)
+                                @php $penulis = $t->petugas ?? $t->user; @endphp
                                 <div class="p-4 bg-gradient-to-r from-primary-50 to-accent-50 rounded-xl border border-primary-100">
                                     <div class="flex items-center gap-2 mb-2">
-                                        <div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">{{ strtoupper(substr($t->petugas->name, 0, 1)) }}</div>
-                                        <p class="font-bold text-gray-900 text-sm">{{ $t->petugas->name }}</p>
+                                        <div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">{{ strtoupper(substr($penulis->name, 0, 1)) }}</div>
+                                        <p class="font-bold text-gray-900 text-sm">{{ $penulis->name }} <span class="text-xs text-gray-400 font-normal">{{ $t->petugas ? '(Petugas)' : '(Masyarakat)' }}</span></p>
                                     </div>
                                     <p class="text-gray-700">{{ $t->isi_tanggapan }}</p>
                                     @if ($t->bukti_foto)

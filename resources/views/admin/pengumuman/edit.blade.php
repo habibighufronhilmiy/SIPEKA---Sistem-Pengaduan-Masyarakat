@@ -4,7 +4,7 @@
             <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">✏️ Edit Pengumuman</h1>
             <p class="text-gray-500 text-sm mt-1">Ubah informasi pengumuman</p>
         </div>
-        <form method="POST" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <form method="POST" action="{{ route('pengumuman.update', $pengumuman) }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
             @csrf @method('PUT')
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Judul</label>

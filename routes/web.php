@@ -50,7 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::post('/profile', [ProfileController::class, 'update']);
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
     Route::get('/notifikasi', function () {
@@ -73,6 +73,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('pengaduan', PengaduanController::class);
         Route::post('/pengaduan/{pengaduan}/submit', [PengaduanController::class, 'submitDraft'])->name('pengaduan.submit');
         Route::post('/pengaduan/{pengaduan}/rating', [PengaduanController::class, 'storeRating'])->name('pengaduan.rating');
+        Route::post('/pengaduan/{pengaduan}/tanggapan', [PengaduanController::class, 'storeTanggapanMasyarakat'])->name('pengaduan.tanggapan.masyarakat');
     });
 
     Route::get('/pengaduan/{pengaduan}/pdf', [PengaduanController::class, 'downloadPdf'])->name('pengaduan.pdf')->middleware('role:masyarakat,admin,petugas');

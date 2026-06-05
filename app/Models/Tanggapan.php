@@ -9,6 +9,7 @@ class Tanggapan extends Model
     protected $fillable = [
         'id_pengaduan',
         'id_petugas',
+        'id_user',
         'tgl_tanggapan',
         'isi_tanggapan',
         'bukti_foto',
@@ -29,5 +30,10 @@ class Tanggapan extends Model
     public function petugas()
     {
         return $this->belongsTo(User::class, 'id_petugas');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id_user');
     }
 }

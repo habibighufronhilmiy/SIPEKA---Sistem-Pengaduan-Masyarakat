@@ -72,13 +72,14 @@
 
         @if ($pengaduan->tanggapans->count() > 0)
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 mb-6">
-                <h2 class="font-extrabold text-lg text-gray-900 mb-5">💬 Tanggapan Petugas</h2>
+                <h2 class="font-extrabold text-lg text-gray-900 mb-5">💬 Tanggapan</h2>
                 <div class="space-y-4">
                     @foreach ($pengaduan->tanggapans as $t)
+                        @php $penulis = $t->petugas ?? $t->user; @endphp
                         <div class="p-4 bg-gradient-to-r from-primary-50 to-accent-50 rounded-xl border border-primary-100">
                             <div class="flex items-center gap-2 mb-2">
-                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">{{ strtoupper(substr($t->petugas->name, 0, 1)) }}</div>
-                                <p class="font-bold text-gray-900 text-sm">{{ $t->petugas->name }}</p>
+                                <div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">{{ strtoupper(substr($penulis->name, 0, 1)) }}</div>
+                                <p class="font-bold text-gray-900 text-sm">{{ $penulis->name }} <span class="text-xs text-gray-400 font-normal">{{ $t->petugas ? '(Petugas)' : '(Anda)' }}</span></p>
                             </div>
                             <p class="text-gray-700">{{ $t->isi_tanggapan }}</p>
                             @if ($t->bukti_foto)
@@ -91,6 +92,20 @@
             </div>
         @endif
 
+        @if ($pengaduan->status !== 'menunggu')
+            <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 mb-6">
+                <h2 class="font-extrabold text-lg text-gray-900 mb-5">✍️ Kirim Tanggapan</h2>
+                <form method="POST" action="{{ route('pengaduan.tanggapan.masyarakat', $pengaduan) }}">
+                    @csrf
+                    <textarea name="isi_tanggapan" rows="3" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition mb-4" placeholder="Tulis tanggapan Anda..."></textarea>
+                    <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-primary-500/20 transition">
+                        <svg class="w-5 h-5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        Kirim Tanggapan
+                    </button>
+                </form>
+            </div>
+        @endif
+
         @if ($pengaduan->status === 'selesai' && !$pengaduan->rating)
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 mb-6">
                 <h2 class="font-extrabold text-lg text-gray-900 mb-5">⭐ Beri Rating</h2>
@@ -98,15 +113,39 @@
                     @csrf
                     <div class="mb-4">
                         <label class="block text-sm font-bold text-gray-700 mb-2">Rating</label>
-                        <div class="flex gap-2">
+                        <div class="flex gap-2" id="starRating">
                             @for ($i = 1; $i <= 5; $i++)
-                                <label class="cursor-pointer">
-                                    <input type="radio" name="rating" value="{{ $i }}" class="hidden peer">
-                                    <span class="text-3xl peer-checked:text-yellow-400 text-gray-200 hover:text-yellow-300 transition peer-checked:scale-110 inline-block">&#9733;</span>
+                                <label class="cursor-pointer star-label" data-value="{{ $i }}">
+                                    <input type="radio" name="rating" value="{{ $i }}" class="hidden">
+                                    <span class="star text-3xl text-gray-200 inline-block">&#9733;</span>
                                 </label>
                             @endfor
                         </div>
                     </div>
+                    <script>
+                        (function() {
+                            const container = document.getElementById('starRating');
+                            const stars = container.querySelectorAll('.star');
+                            const labels = container.querySelectorAll('.star-label');
+                            let selected = 0;
+
+                            function highlight(n) {
+                                stars.forEach((s, i) => {
+                                    s.style.color = i < n ? '#eab308' : '#d1d5db';
+                                });
+                            }
+
+                            labels.forEach((label, idx) => {
+                                label.addEventListener('mouseenter', () => highlight(idx + 1));
+                                label.addEventListener('click', () => {
+                                    selected = idx + 1;
+                                    highlight(selected);
+                                });
+                            });
+
+                            container.addEventListener('mouseleave', () => highlight(selected));
+                        })();
+                    </script>
                     <div class="mb-4">
                         <label class="block text-sm font-bold text-gray-700 mb-1.5">Komentar</label>
                         <textarea name="komentar" rows="3" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition" placeholder="Bagaimana pengalaman kamu?"></textarea>

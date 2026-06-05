@@ -9,7 +9,7 @@
             <p class="text-gray-500 text-sm mt-1">Sampaikan pendapat Anda untuk kemajuan bersama</p>
         </div>
 
-        <form method="POST" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <form method="POST" action="{{ route('kritik-saran.store') }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
             @csrf
 
             <div class="mb-5">

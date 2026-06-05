@@ -194,6 +194,36 @@ class PengaduanController extends Controller
         return back()->with('success', 'Tanggapan berhasil dikirim.');
     }
 
+    public function storeTanggapanMasyarakat(Request $request, Pengaduan $pengaduan)
+    {
+        if ($pengaduan->id_user !== Auth::id()) {
+            abort(403);
+        }
+
+        $request->validate([
+            'isi_tanggapan' => 'required|string',
+        ]);
+
+        $pengaduan->tanggapans()->create([
+            'id_user' => Auth::id(),
+            'tgl_tanggapan' => now(),
+            'isi_tanggapan' => $request->isi_tanggapan,
+        ]);
+
+        $penerima = $pengaduan->id_petugas ?? \App\Models\User::where('role', 'petugas')->value('id');
+        if ($penerima) {
+            Notifikasi::create([
+                'id_user' => $penerima,
+                'id_pengaduan' => $pengaduan->id,
+                'judul' => 'Tanggapan Baru dari Masyarakat',
+                'pesan' => Auth::user()->name . ' memberikan tanggapan pada pengaduan: ' . $pengaduan->judul,
+                'tipe' => 'info',
+            ]);
+        }
+
+        return back()->with('success', 'Tanggapan berhasil dikirim.');
+    }
+
     private function prosesAiVerifikasi(Pengaduan $pengaduan): void
     {
         RiwayatPengaduan::create([

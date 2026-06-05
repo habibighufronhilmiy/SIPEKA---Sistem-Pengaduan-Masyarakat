@@ -4,7 +4,7 @@
             <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">📢 Buat Pengumuman</h1>
             <p class="text-gray-500 text-sm mt-1">Bagikan informasi ke seluruh pengguna</p>
         </div>
-        <form method="POST" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <form method="POST" action="{{ route('pengumuman.store') }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
             @csrf
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Judul</label>

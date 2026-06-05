@@ -7,8 +7,13 @@
 
         <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8 mb-6">
             <div class="flex items-center gap-4 mb-6 pb-6 border-b border-gray-100">
-                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-2xl font-extrabold shadow-md">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                @php $foto = auth()->user()->foto_profil; @endphp
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-2xl font-extrabold shadow-md overflow-hidden">
+                    @if ($foto)
+                        <img src="{{ asset('storage/' . $foto) }}" class="w-full h-full object-cover">
+                    @else
+                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    @endif
                 </div>
                 <div>
                     <h2 class="font-extrabold text-xl text-gray-900">{{ auth()->user()->name }}</h2>
@@ -16,7 +21,7 @@
                 </div>
             </div>
 
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="grid md:grid-cols-2 gap-5">
                     <div>

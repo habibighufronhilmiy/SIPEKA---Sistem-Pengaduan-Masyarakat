@@ -116,8 +116,13 @@
             </nav>
             <div class="border-t border-gray-100 p-3 shrink-0">
                 <a href="{{ route('profile.show') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-100 transition">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0">
-                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                    @php $foto = auth()->user()->foto_profil; @endphp
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-sm font-bold shadow-sm shrink-0 overflow-hidden">
+                        @if ($foto)
+                            <img src="{{ asset('storage/' . $foto) }}" class="w-full h-full object-cover">
+                        @else
+                            {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        @endif
                     </div>
                     <div class="min-w-0 flex-1">
                         <p class="font-bold text-gray-900 truncate">{{ auth()->user()->name }}</p>
