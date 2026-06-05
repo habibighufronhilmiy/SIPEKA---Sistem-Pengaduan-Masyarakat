@@ -40,7 +40,7 @@
                     </span>
                 </div>
                 <div class="flex items-center gap-3 text-sm text-gray-400">
-                    <span>{{ $k->user->name }}</span>
+                    <span>{{ $k->user?->name ?? '-' }}</span>
                     <span>&middot;</span>
                     <span>{{ $k->created_at->format('d/m/Y H:i') }}</span>
                 </div>

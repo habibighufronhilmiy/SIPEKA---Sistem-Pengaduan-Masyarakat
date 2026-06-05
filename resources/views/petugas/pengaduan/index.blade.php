@@ -43,8 +43,8 @@
                     @forelse ($pengaduans as $p)
                         <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
                             <td class="p-4 font-semibold text-gray-900">{{ $p->judul }}</td>
-                            <td class="p-4 text-sm text-gray-600">{{ $p->user->name }}</td>
-                            <td class="p-4 text-sm text-gray-600">{{ $p->kategori->nama_kategori }}</td>
+                            <td class="p-4 text-sm text-gray-600">{{ $p->user?->name ?? '-' }}</td>
+                            <td class="p-4 text-sm text-gray-600">{{ $p->kategori?->nama_kategori ?? '-' }}</td>
                             <td class="p-4">
                                 <span class="text-xs px-2.5 py-1 rounded-full font-semibold
                                     @if($p->status == 'menunggu') bg-yellow-100 text-yellow-700

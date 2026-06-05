@@ -24,9 +24,9 @@
 
                     <h1 class="text-xl md:text-2xl font-extrabold text-gray-900 mb-3">{{ $pengaduan->judul }}</h1>
                     <div class="flex items-center gap-2 text-sm text-gray-400 mb-4">
-                        <span>{{ $pengaduan->user->name }}</span>
+                        <span>{{ $pengaduan->user?->name ?? '-' }}</span>
                         <span>&middot;</span>
-                        <span>{{ $pengaduan->kategori->nama_kategori }}</span>
+                        <span>{{ $pengaduan->kategori?->nama_kategori ?? '-' }}</span>
                         <span>&middot;</span>
                         <span>{{ $pengaduan->created_at->format('d/m/Y H:i') }}</span>
                     </div>

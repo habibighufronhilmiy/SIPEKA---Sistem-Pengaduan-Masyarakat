@@ -186,7 +186,7 @@
             attribution: '&copy; OpenStreetMap'
         }).addTo(map);
         L.marker([lat, lng]).addTo(map)
-            .bindPopup('{{ addslashes($pengaduan->lokasi ?? "Lokasi Kejadian") }}')
+            .bindPopup(@js($pengaduan->lokasi ?? 'Lokasi Kejadian'))
             .openPopup();
     </script>
     @endif

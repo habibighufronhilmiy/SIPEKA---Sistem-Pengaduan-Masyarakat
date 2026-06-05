@@ -112,7 +112,8 @@ Route::middleware('auth')->group(function () {
     });
 
     // Voting routes (accessible by multiple roles)
-    Route::resource('voting', VotingController::class)->middleware('role:admin,petugas');
+    Route::resource('voting', VotingController::class)->except(['show'])->middleware('role:admin,petugas');
+    Route::get('/voting/{voting}', [VotingController::class, 'show'])->name('voting.show');
     Route::post('/voting/{voting}/vote', [VotingController::class, 'vote'])->name('voting.vote')->middleware('role:masyarakat,petugas,admin');
 
     // Pengumuman routes (accessible by admin & petugas)

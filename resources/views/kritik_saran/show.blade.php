@@ -23,10 +23,10 @@
 
             <div class="flex items-center gap-3 mb-6">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-br from-gray-200 to-gray-100 flex items-center justify-center text-gray-600 font-bold text-sm">
-                    {{ substr($kritikSaran->user->name, 0, 1) }}
+                    {{ substr($kritikSaran->user?->name ?? '-', 0, 1) }}
                 </div>
                 <div>
-                    <p class="font-bold text-gray-900">{{ $kritikSaran->user->name }}</p>
+                    <p class="font-bold text-gray-900">{{ $kritikSaran->user?->name ?? '-' }}</p>
                     <p class="text-xs text-gray-400">{{ $kritikSaran->created_at->format('d/m/Y H:i') }}</p>
                 </div>
             </div>

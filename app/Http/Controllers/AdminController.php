@@ -152,7 +152,7 @@ class AdminController extends Controller
 
     public function pengaduanShow(Pengaduan $pengaduan)
     {
-        $pengaduan->load(['user', 'kategori', 'petugas', 'media', 'riwayats', 'tanggapans.petugas', 'rating']);
+        $pengaduan->load(['user', 'kategori', 'petugas', 'media', 'riwayats', 'tanggapans.petugas', 'tanggapans.user', 'rating']);
         $petugases = User::where('role', 'petugas')->get();
         return view('admin.pengaduan.show', compact('pengaduan', 'petugases'));
     }

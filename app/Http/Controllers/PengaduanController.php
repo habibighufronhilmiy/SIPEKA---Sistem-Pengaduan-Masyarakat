@@ -96,7 +96,7 @@ class PengaduanController extends Controller
             abort(403);
         }
 
-        $pengaduan->load(['kategori', 'media', 'riwayats', 'tanggapans.petugas', 'rating', 'user']);
+        $pengaduan->load(['kategori', 'media', 'riwayats', 'tanggapans.petugas', 'tanggapans.user', 'rating', 'user']);
         return view('masyarakat.pengaduan.show', compact('pengaduan'));
     }
 
@@ -170,7 +170,7 @@ class PengaduanController extends Controller
             abort(403);
         }
 
-        $pengaduan->load(['user', 'kategori', 'petugas', 'tanggapans.petugas', 'riwayats']);
+        $pengaduan->load(['user', 'kategori', 'petugas', 'tanggapans.petugas', 'tanggapans.user', 'riwayats']);
 
         $pdf = app('dompdf.wrapper');
         $pdf->loadView('pengaduan.pdf', compact('pengaduan'));

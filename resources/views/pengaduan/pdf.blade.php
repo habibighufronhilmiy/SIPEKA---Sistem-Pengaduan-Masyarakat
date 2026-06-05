@@ -80,7 +80,7 @@
         <h2>Tanggapan</h2>
         @foreach ($pengaduan->tanggapans as $t)
             <div class="content-box" style="margin-bottom:6px;">
-                <p style="margin:0 0 4px;"><strong>{{ $t->petugas->name ?? 'Petugas' }}</strong> &middot; {{ $t->tgl_tanggapan ? \Carbon\Carbon::parse($t->tgl_tanggapan)->format('d/m/Y H:i') : '-' }}</p>
+                <p style="margin:0 0 4px;"><strong>{{ $t->petugas?->name ?? 'Petugas' }}</strong> &middot; {{ $t->tgl_tanggapan ? \Carbon\Carbon::parse($t->tgl_tanggapan)->format('d/m/Y H:i') : '-' }}</p>
                 <p style="margin:0;">{{ $t->isi_tanggapan }}</p>
             </div>
         @endforeach

@@ -24,7 +24,7 @@
             <h1 class="text-xl md:text-2xl font-extrabold text-gray-900 mb-3">{{ $kritikSaran->judul }}</h1>
 
             <div class="flex items-center gap-2 text-sm text-gray-400 mb-6">
-                <span>{{ $kritikSaran->user->name }}</span>
+                <span>{{ $kritikSaran->user?->name ?? '-' }}</span>
                 <span>&middot;</span>
                 <span>{{ $kritikSaran->created_at->format('d/m/Y H:i') }}</span>
             </div>

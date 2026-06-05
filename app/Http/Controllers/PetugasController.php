@@ -37,7 +37,7 @@ class PetugasController extends Controller
 
     public function show(Pengaduan $pengaduan)
     {
-        $pengaduan->load(['user', 'kategori', 'media', 'riwayats', 'tanggapans.petugas']);
+        $pengaduan->load(['user', 'kategori', 'media', 'riwayats', 'tanggapans.petugas', 'tanggapans.user']);
         return view('petugas.pengaduan.show', compact('pengaduan'));
     }
 
@@ -96,6 +96,14 @@ class PetugasController extends Controller
 
     public function proses(Pengaduan $pengaduan)
     {
+        if ($pengaduan->status !== 'diverifikasi') {
+            return back()->with('error', 'Pengaduan harus diverifikasi terlebih dahulu.');
+        }
+
+        if ($pengaduan->id_petugas && $pengaduan->id_petugas !== Auth::id()) {
+            return back()->with('error', 'Pengaduan ini sedang ditangani oleh petugas lain.');
+        }
+
         $pengaduan->update([
             'status' => 'diproses',
             'id_petugas' => Auth::id(),
@@ -131,6 +139,14 @@ class PetugasController extends Controller
 
     public function selesai(Request $request, Pengaduan $pengaduan)
     {
+        if ($pengaduan->id_petugas !== Auth::id()) {
+            return back()->with('error', 'Anda tidak ditugaskan untuk menangani pengaduan ini.');
+        }
+
+        if ($pengaduan->status !== 'diproses') {
+            return back()->with('error', 'Pengaduan harus dalam proses terlebih dahulu.');
+        }
+
         $request->validate([
             'isi_tanggapan' => 'required|string',
             'bukti_foto' => 'nullable|image|max:5120',
