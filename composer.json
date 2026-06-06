@@ -11,6 +11,7 @@
         "laravel/framework": "^13.8",
         "laravel/socialite": "^5.27",
         "laravel/tinker": "^3.0",
+        "resend/resend-laravel": "*",
         "symfony/http-client": "*"
     },
     "require-dev": {
