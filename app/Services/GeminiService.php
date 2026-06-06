@@ -23,6 +23,7 @@ class GeminiService
         }
 
         $laporanTerbaru = Pengaduan::where('id', '!=', $pengaduan->id)
+            ->where('id_kategori', $pengaduan->id_kategori)
             ->whereIn('status', ['menunggu', 'diverifikasi', 'diproses', 'selesai'])
             ->latest()
             ->take(10)
@@ -34,7 +35,7 @@ class GeminiService
 Anda adalah sistem verifikasi pengaduan masyarakat. Tugas Anda memeriksa apakah laporan ini valid atau tidak.
 
 INSTRUKSI:
-1. Periksa apakah laporan ini adalah DUPLIKAT dari laporan yang sudah ada (judul/isi/lokasi yang sangat mirip). TOLAK jika duplikat.
+1. Periksa apakah laporan ini adalah DUPLIKAT dari laporan SEKATEGORI yang sudah ada (judul/isi/lokasi yang sangat mirip). TOLAK jika duplikat.
 2. Periksa apakah laporan ini mengandung SPAM, ujaran kebencian, konten tidak pantas, atau tidak masuk akal. TOLAK jika ya.
 3. Periksa apakah isi laporan adalah teks yang masuk akal sebagai pengaduan masyarakat. TOLAK jika isinya hanya path file (misal: C:\Users\...), URL, karakter acak, atau konten yang tidak relevan dengan pengaduan.
 4. Periksa apakah laporan ini masuk akal sebagai pengaduan masyarakat
@@ -54,7 +55,7 @@ LAPORAN BARU:
 - Isi: {$pengaduan->isi_laporan}
 - Lokasi: {$pengaduan->lokasi}
 
-LAPORAN SEBELUMNYA (untuk cek duplikasi):
+LAPORAN SEBELUMNYA (hanya dari kategori yang sama, untuk cek duplikasi):
 {$laporanTerbaru}
 USER;
 
