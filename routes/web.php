@@ -133,3 +133,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/{kritikSaran}/tanggapan', [KritikSaranController::class, 'tanggapan'])->name('tanggapan');
     });
 });
+
+Route::get('/debug-mail', function () {
+    try {
+        \Illuminate\Support\Facades\Mail::raw('Test email from Railway', function ($msg) {
+            $msg->to('habibighufron23@gmail.com')->subject('Debug Test Railway');
+        });
+        return 'EMAIL OK';
+    } catch (\Exception $e) {
+        return 'ERROR: ' . $e->getMessage() . ' | ' . get_class($e);
+    }
+});
