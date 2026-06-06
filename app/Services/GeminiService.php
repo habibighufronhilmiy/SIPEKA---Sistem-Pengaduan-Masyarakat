@@ -70,7 +70,13 @@ LAPORAN SEBELUMNYA (hanya dari kategori yang sama, untuk cek duplikasi):
 USER;
 
         try {
-            $model = $hasFotos ? 'llama-3.2-11b-vision-preview' : 'llama-3.3-70b-versatile';
+            $model = $hasFotos ? 'meta-llama/llama-4-scout-17b-16e-instruct' : 'llama-3.3-70b-versatile';
+
+            $body = [
+                'model' => $model,
+                'temperature' => 0.1,
+                'response_format' => ['type' => 'json_object'],
+            ];
 
             if ($hasFotos) {
                 $content = [['type' => 'text', 'text' => $userPrompt]];
@@ -88,23 +94,14 @@ USER;
                     ];
                 }
 
-                $body = [
-                    'model' => $model,
-                    'messages' => [
-                        ['role' => 'system', 'content' => $systemPrompt],
-                        ['role' => 'user', 'content' => $content],
-                    ],
-                    'temperature' => 0.1,
+                $body['messages'] = [
+                    ['role' => 'system', 'content' => $systemPrompt],
+                    ['role' => 'user', 'content' => $content],
                 ];
             } else {
-                $body = [
-                    'model' => $model,
-                    'messages' => [
-                        ['role' => 'system', 'content' => $systemPrompt],
-                        ['role' => 'user', 'content' => $userPrompt],
-                    ],
-                    'temperature' => 0.1,
-                    'response_format' => ['type' => 'json_object'],
+                $body['messages'] = [
+                    ['role' => 'system', 'content' => $systemPrompt],
+                    ['role' => 'user', 'content' => $userPrompt],
                 ];
             }
 
