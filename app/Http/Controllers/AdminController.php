@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Mail\PetugasAssignedMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -174,7 +175,11 @@ class AdminController extends Controller
         $petugas = User::find($request->id_petugas);
         $pengaduan->load('kategori');
         if ($petugas && $petugas->email) {
-            Mail::to($petugas->email)->send(new PetugasAssignedMail($pengaduan, $petugas->name));
+            try {
+                Mail::to($petugas->email)->send(new PetugasAssignedMail($pengaduan, $petugas->name));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email assign petugas: ' . $e->getMessage());
+            }
         }
 
         AuditLog::log('Assign petugas', 'Menugaskan ' . ($petugas->name ?? 'petugas') . ' ke pengaduan: ' . $pengaduan->judul, $pengaduan, 'pengaduan');

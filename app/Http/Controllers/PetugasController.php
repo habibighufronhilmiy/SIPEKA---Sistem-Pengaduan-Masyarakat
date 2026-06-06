@@ -11,6 +11,7 @@ use App\Mail\PengaduanStatusMail;
 use App\Mail\TanggapanMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class PetugasController extends Controller
@@ -79,11 +80,15 @@ class PetugasController extends Controller
 
         $pengaduan->load('user');
         if ($pengaduan->user->email) {
-            Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
-                $pengaduan,
-                $request->status === 'diverifikasi' ? 'Diverifikasi' : 'Ditolak',
-                $pesanNotif
-            ));
+            try {
+                Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
+                    $pengaduan,
+                    $request->status === 'diverifikasi' ? 'Diverifikasi' : 'Ditolak',
+                    $pesanNotif
+                ));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email verifikasi petugas: ' . $e->getMessage());
+            }
         }
 
         AuditLog::log('Verifikasi pengaduan', $request->status === 'diverifikasi'
@@ -125,11 +130,15 @@ class PetugasController extends Controller
 
         $pengaduan->load('user');
         if ($pengaduan->user->email) {
-            Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
-                $pengaduan,
-                'Diproses',
-                'Pengaduan Anda sedang dalam proses penanganan oleh petugas.'
-            ));
+            try {
+                Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
+                    $pengaduan,
+                    'Diproses',
+                    'Pengaduan Anda sedang dalam proses penanganan oleh petugas.'
+                ));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email diproses: ' . $e->getMessage());
+            }
         }
 
         AuditLog::log('Proses pengaduan', 'Memproses pengaduan: ' . $pengaduan->judul, $pengaduan, 'pengaduan');
@@ -183,13 +192,21 @@ class PetugasController extends Controller
 
         $pengaduan->load('user');
         if ($pengaduan->user->email) {
-            Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
-                $pengaduan,
-                'Selesai',
-                'Pengaduan Anda telah selesai ditangani. Silakan berikan rating melalui aplikasi.'
-            ));
+            try {
+                Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
+                    $pengaduan,
+                    'Selesai',
+                    'Pengaduan Anda telah selesai ditangani. Silakan berikan rating melalui aplikasi.'
+                ));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email selesai: ' . $e->getMessage());
+            }
 
-            Mail::to($pengaduan->user->email)->send(new TanggapanMail($pengaduan, $request->isi_tanggapan));
+            try {
+                Mail::to($pengaduan->user->email)->send(new TanggapanMail($pengaduan, $request->isi_tanggapan));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email tanggapan: ' . $e->getMessage());
+            }
         }
 
         AuditLog::log('Selesaikan pengaduan', 'Menyelesaikan pengaduan: ' . $pengaduan->judul, $pengaduan, 'pengaduan');

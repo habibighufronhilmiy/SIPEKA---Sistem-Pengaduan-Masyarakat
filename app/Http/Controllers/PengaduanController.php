@@ -13,6 +13,7 @@ use App\Models\Rating;
 use App\Services\GeminiService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use App\Mail\PengaduanStatusMail;
@@ -256,11 +257,15 @@ class PengaduanController extends Controller
             ]);
 
             if ($user->email) {
-                Mail::to($user->email)->send(new PengaduanStatusMail(
-                    $pengaduan,
-                    'Diverifikasi',
-                    'Pengaduan Anda telah diverifikasi oleh sistem AI dan akan segera diproses petugas.'
-                ));
+                try {
+                    Mail::to($user->email)->send(new PengaduanStatusMail(
+                        $pengaduan,
+                        'Diverifikasi',
+                        'Pengaduan Anda telah diverifikasi oleh sistem AI dan akan segera diproses petugas.'
+                    ));
+                } catch (\Exception $e) {
+                    Log::error('Gagal kirim email verifikasi: ' . $e->getMessage());
+                }
             }
         } else {
             Notifikasi::create([
@@ -272,11 +277,15 @@ class PengaduanController extends Controller
             ]);
 
             if ($user->email) {
-                Mail::to($user->email)->send(new PengaduanStatusMail(
-                    $pengaduan,
-                    'Ditolak',
-                    'Maaf, pengaduan Anda ditolak. Alasan: ' . $hasil['alasan']
-                ));
+                try {
+                    Mail::to($user->email)->send(new PengaduanStatusMail(
+                        $pengaduan,
+                        'Ditolak',
+                        'Maaf, pengaduan Anda ditolak. Alasan: ' . $hasil['alasan']
+                    ));
+                } catch (\Exception $e) {
+                    Log::error('Gagal kirim email ditolak: ' . $e->getMessage());
+                }
             }
         }
     }
@@ -294,7 +303,11 @@ class PengaduanController extends Controller
         ]);
 
         if ($pengaduan->user->email) {
-            Mail::to($pengaduan->user->email)->send(new TanggapanMail($pengaduan, $isiTanggapan));
+            try {
+                Mail::to($pengaduan->user->email)->send(new TanggapanMail($pengaduan, $isiTanggapan));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email tanggapan: ' . $e->getMessage());
+            }
         }
     }
 
