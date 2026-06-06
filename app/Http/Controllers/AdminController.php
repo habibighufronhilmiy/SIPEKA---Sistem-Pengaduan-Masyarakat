@@ -81,7 +81,7 @@ class AdminController extends Controller
         }
         AuditLog::log('Menghapus user', 'Menghapus user: ' . $user->name . ' (' . $user->email . ')', null, 'user');
         $user->delete();
-        return redirect()->route('admin.users')->with('success', 'User berhasil dihapus.');
+        return back()->with('success', 'User berhasil dihapus.');
     }
 
     public function kategoris()
@@ -126,7 +126,7 @@ class AdminController extends Controller
     {
         AuditLog::log('Menghapus kategori', 'Menghapus kategori: ' . $kategori->nama_kategori, null, 'kategori');
         $kategori->delete();
-        return redirect()->route('admin.kategoris')->with('success', 'Kategori berhasil dihapus.');
+        return back()->with('success', 'Kategori berhasil dihapus.');
     }
 
     public function pengaduanIndex(Request $request)
@@ -205,6 +205,6 @@ class AdminController extends Controller
 
         AuditLog::log('Menghapus pengaduan', 'Menghapus pengaduan: ' . $judul, null, 'pengaduan');
 
-        return redirect()->route('admin.pengaduan')->with('success', 'Pengaduan berhasil dihapus.');
+        return back()->with('success', 'Pengaduan berhasil dihapus.');
     }
 }
