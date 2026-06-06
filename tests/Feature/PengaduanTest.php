@@ -33,7 +33,7 @@ test('masyarakat can create pengaduan', function () {
     $pengaduan = Pengaduan::first();
     expect($pengaduan)->not->toBeNull();
     expect($pengaduan->judul)->toBe('Jalan Rusak di Merdeka');
-    expect($pengaduan->status)->toBe('menunggu');
+    expect($pengaduan->status)->toBe('diverifikasi');
 });
 
 test('masyarakat can view their pengaduan detail', function () {

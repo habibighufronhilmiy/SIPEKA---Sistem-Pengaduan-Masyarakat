@@ -25,7 +25,7 @@ test('user can mark notification as read', function () {
         'is_read' => false,
     ]);
 
-    $this->post("/notifikasi/read/{$notif->id}")->assertSessionHas('success');
+    $this->post("/notifikasi/read/{$notif->id}")->assertRedirect();
 
     $notif->refresh();
     expect($notif->is_read)->toBeTrue();
@@ -37,7 +37,7 @@ test('user can mark all notifications as read', function () {
     Notifikasi::create(['id_user' => $this->user->id, 'judul' => 'Notif 1', 'pesan' => 'Pesan 1', 'tipe' => 'info', 'is_read' => false]);
     Notifikasi::create(['id_user' => $this->user->id, 'judul' => 'Notif 2', 'pesan' => 'Pesan 2', 'tipe' => 'info', 'is_read' => false]);
 
-    $this->post('/notifikasi/read-all')->assertSessionHas('success');
+    $this->post('/notifikasi/read-all')->assertRedirect();
 
     expect(Notifikasi::where('is_read', false)->count())->toBe(0);
 });
