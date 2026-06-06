@@ -59,8 +59,12 @@
                                 </span>
                             </td>
                             <td class="p-4 text-sm text-gray-500">{{ $p->created_at->format('d/m/Y') }}</td>
-                            <td class="p-4">
+                            <td class="p-4 flex gap-2">
                                 <a href="{{ route('admin.pengaduan.show', $p) }}" class="text-primary-600 font-bold text-sm hover:text-primary-700">Detail</a>
+                                <form action="{{ route('admin.pengaduan.destroy', $p) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pengaduan ini? Semua data terkait akan dihapus permanen.')">
+                                    @csrf @method('DELETE')
+                                    <button class="text-red-600 font-bold text-sm hover:text-red-700">Hapus</button>
+                                </form>
                             </td>
                         </tr>
                     @empty

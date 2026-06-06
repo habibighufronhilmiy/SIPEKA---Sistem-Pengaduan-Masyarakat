@@ -106,6 +106,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pengaduan', [AdminController::class, 'pengaduanIndex'])->name('pengaduan');
         Route::get('/pengaduan/{pengaduan}', [AdminController::class, 'pengaduanShow'])->name('pengaduan.show');
         Route::post('/pengaduan/{pengaduan}/assign', [AdminController::class, 'assignPetugas'])->name('pengaduan.assign');
+        Route::delete('/pengaduan/{pengaduan}', [AdminController::class, 'pengaduanDestroy'])->name('pengaduan.destroy');
 
         Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
         Route::get('/audit', [AuditLogController::class, 'index'])->name('audit');

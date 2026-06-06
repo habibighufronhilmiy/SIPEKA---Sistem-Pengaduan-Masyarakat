@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -185,5 +186,25 @@ class AdminController extends Controller
         AuditLog::log('Assign petugas', 'Menugaskan ' . ($petugas->name ?? 'petugas') . ' ke pengaduan: ' . $pengaduan->judul, $pengaduan, 'pengaduan');
 
         return back()->with('success', 'Petugas berhasil ditugaskan.');
+    }
+
+    public function pengaduanDestroy(Pengaduan $pengaduan)
+    {
+        $judul = $pengaduan->judul;
+
+        foreach ($pengaduan->media as $media) {
+            Storage::disk('public')->delete($media->file_path);
+            $media->delete();
+        }
+
+        $pengaduan->riwayats()->delete();
+        $pengaduan->tanggapans()->delete();
+        $pengaduan->rating()->delete();
+        $pengaduan->notifikasis()->delete();
+        $pengaduan->delete();
+
+        AuditLog::log('Menghapus pengaduan', 'Menghapus pengaduan: ' . $judul, null, 'pengaduan');
+
+        return redirect()->route('admin.pengaduan')->with('success', 'Pengaduan berhasil dihapus.');
     }
 }
