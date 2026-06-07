@@ -131,43 +131,6 @@
             </div>
 
             <div class="space-y-6">
-                @if (!$pengaduan->id_petugas)
-                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <h3 class="font-bold text-gray-900 mb-4">👥 Assign Petugas</h3>
-                        <form method="POST" action="{{ route('admin.pengaduan.assign', $pengaduan) }}">
-                            @csrf
-                            <select name="id_petugas" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition mb-4">
-                                <option value="">Pilih petugas...</option>
-                                @foreach ($petugases as $p)
-                                    <option value="{{ $p->id }}">{{ $p->name }} ({{ $p->email }})</option>
-                                @endforeach
-                            </select>
-                            <button type="submit" class="w-full py-3 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-xl font-bold hover:shadow-lg hover:shadow-primary-500/20 transition">Assign</button>
-                        </form>
-                    </div>
-                @else
-                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                        <h3 class="font-bold text-gray-900 mb-3">👤 Petugas</h3>
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold">{{ substr($pengaduan->petugas?->name ?? '-', 0, 1) }}</div>
-                            <div>
-                                <p class="font-bold text-gray-900">{{ $pengaduan->petugas?->name ?? '-' }}</p>
-                                <p class="text-sm text-gray-400">{{ $pengaduan->petugas?->email }}</p>
-                            </div>
-                        </div>
-                        <form method="POST" action="{{ route('admin.pengaduan.assign', $pengaduan) }}" class="mt-4 pt-4 border-t border-gray-100">
-                            @csrf
-                            <select name="id_petugas" class="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition text-sm mb-3">
-                                <option value="">Ganti petugas...</option>
-                                @foreach ($petugases as $p)
-                                    <option value="{{ $p->id }}" {{ $pengaduan->id_petugas == $p->id ? 'selected' : '' }}>{{ $p->name }}</option>
-                                @endforeach
-                            </select>
-                            <button type="submit" class="w-full py-2.5 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-primary-500/20 transition">Ganti</button>
-                        </form>
-                    </div>
-                @endif
-
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="font-bold text-gray-900 mb-3">📄 Aksi</h3>
                     <div class="space-y-3">
