@@ -16,6 +16,17 @@
 
         <div class="space-y-3">
             @forelse ($notifikasis as $notif)
+                @php
+                    $notifUrl = $notif->url;
+                    if (!$notifUrl && $notif->id_pengaduan) {
+                        $role = auth()->user()->role;
+                        $notifUrl = match($role) {
+                            'admin' => route('admin.pengaduan.show', $notif->id_pengaduan),
+                            'petugas' => route('petugas.pengaduan.show', $notif->id_pengaduan),
+                            default => route('pengaduan.show', $notif->id_pengaduan),
+                        };
+                    }
+                @endphp
                 <div class="bg-white rounded-2xl border p-5 transition {{ !$notif->is_read ? 'border-l-4 border-l-primary-500 border-gray-100 shadow-sm' : 'border-gray-100 shadow-sm opacity-75' }}">
                     <div class="flex justify-between items-start gap-4">
                         <div class="flex-1 min-w-0">
@@ -23,9 +34,17 @@
                                 @if (!$notif->is_read)
                                     <span class="w-2 h-2 rounded-full bg-primary-500 shrink-0"></span>
                                 @endif
-                                <h3 class="font-bold text-gray-900 {{ !$notif->is_read ? '' : '' }}">{{ $notif->judul }}</h3>
+                                @if ($notifUrl)
+                                    <a href="{{ $notifUrl }}" class="font-bold text-gray-900 hover:text-primary-600 transition {{ !$notif->is_read ? '' : '' }}">{{ $notif->judul }}</a>
+                                @else
+                                    <h3 class="font-bold text-gray-900 {{ !$notif->is_read ? '' : '' }}">{{ $notif->judul }}</h3>
+                                @endif
                             </div>
-                            <p class="text-gray-500 text-sm">{{ $notif->pesan }}</p>
+                            @if ($notifUrl)
+                                <a href="{{ $notifUrl }}" class="text-gray-500 text-sm hover:text-gray-700 transition block">{{ $notif->pesan }}</a>
+                            @else
+                                <p class="text-gray-500 text-sm">{{ $notif->pesan }}</p>
+                            @endif
                             <p class="text-gray-400 text-xs mt-2">{{ $notif->created_at->diffForHumans() }}</p>
                         </div>
                         @if (!$notif->is_read)

@@ -112,8 +112,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/audit', [AuditLogController::class, 'index'])->name('audit');
     });
 
-    // Voting routes (accessible by multiple roles)
-    Route::resource('voting', VotingController::class)->except(['show'])->middleware('role:admin,petugas');
+    // Voting routes
+    Route::resource('voting', VotingController::class)->except(['index', 'show'])->middleware('role:admin,petugas');
+    Route::get('/voting', [VotingController::class, 'index'])->name('voting.index');
     Route::get('/voting/{voting}', [VotingController::class, 'show'])->name('voting.show');
     Route::post('/voting/{voting}/vote', [VotingController::class, 'vote'])->name('voting.vote')->middleware('role:masyarakat,petugas,admin');
 
