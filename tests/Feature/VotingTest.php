@@ -30,6 +30,20 @@ test('admin can create voting with options', function () {
     expect($voting->pilihans)->toHaveCount(3);
 });
 
+test('masyarakat can view voting index', function () {
+    $voting = Voting::create([
+        'id_user' => $this->admin->id,
+        'pertanyaan' => 'Pertanyaan Index?',
+        'deskripsi' => 'Deskripsi',
+        'tanggal_mulai' => now(),
+        'tanggal_selesai' => now()->addDays(7),
+        'status' => 'aktif',
+    ]);
+
+    $this->actingAs($this->user);
+    $this->get('/voting')->assertOk()->assertSee('Pertanyaan Index?');
+});
+
 test('masyarakat can view voting and vote', function () {
     $voting = Voting::create([
         'id_user' => $this->admin->id,

@@ -232,9 +232,8 @@ class FullFeatureTest extends TestCase
         $this->get('/admin/pengaduan')->assertOk();
         $this->get("/admin/pengaduan/{$pengaduan->id}")->assertOk();
 
-        $this->post("/admin/pengaduan/{$pengaduan->id}/assign", [
-            'id_petugas' => $this->petugas->id,
-        ])->assertSessionHas('success');
+        $this->delete("/admin/pengaduan/{$pengaduan->id}")->assertSessionHas('success');
+        $this->assertEquals(0, Pengaduan::count());
     }
 
     public function test_9_admin_kategori_management()

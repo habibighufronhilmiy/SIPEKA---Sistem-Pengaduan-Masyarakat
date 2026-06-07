@@ -75,7 +75,7 @@ test('admin can manage categories', function () {
     expect(Kategori::count())->toBe(0);
 });
 
-test('admin can view and assign pengaduan', function () {
+test('admin can view and delete pengaduan', function () {
     $kategori = Kategori::create(['nama_kategori' => 'Infrastruktur', 'slug' => 'infrastruktur']);
 
     $pengaduan = Pengaduan::create([
@@ -92,7 +92,6 @@ test('admin can view and assign pengaduan', function () {
     $this->get('/admin/pengaduan')->assertOk();
     $this->get("/admin/pengaduan/{$pengaduan->id}")->assertOk();
 
-    $this->post("/admin/pengaduan/{$pengaduan->id}/assign", [
-        'id_petugas' => $this->petugas->id,
-    ])->assertSessionHas('success');
+    $this->delete("/admin/pengaduan/{$pengaduan->id}")->assertSessionHas('success');
+    expect(Pengaduan::count())->toBe(0);
 });
