@@ -4,7 +4,7 @@
             <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">✏️ Edit Pengumuman</h1>
             <p class="text-gray-500 text-sm mt-1">Ubah informasi pengumuman</p>
         </div>
-        <form method="POST" action="{{ route('pengumuman.update', $pengumuman) }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <form method="POST" action="{{ route('pengumuman.update', $pengumuman) }}" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
             @csrf @method('PUT')
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Judul</label>
@@ -22,6 +22,16 @@
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Isi</label>
                 <textarea name="isi" rows="6" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition">{{ $pengumuman->isi }}</textarea>
+            </div>
+            <div class="mb-5">
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Foto / Poster</label>
+                @if ($pengumuman->foto)
+                    <div class="mb-2">
+                        <img src="{{ asset('storage/' . $pengumuman->foto) }}" class="w-48 h-32 object-cover rounded-lg border">
+                    </div>
+                @endif
+                <input type="file" name="foto" accept="image/*" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition">
+                <p class="text-xs text-gray-400 mt-1">Maks. 2MB. Biarkan kosong jika tidak ingin mengubah foto.</p>
             </div>
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Lokasi</label>

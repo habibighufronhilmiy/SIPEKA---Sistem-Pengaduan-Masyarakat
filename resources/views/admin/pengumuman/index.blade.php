@@ -12,6 +12,7 @@
             <table class="w-full">
                 <thead>
                     <tr class="bg-gray-50">
+                        <th class="text-left p-4 text-sm font-bold text-gray-600">Poster</th>
                         <th class="text-left p-4 text-sm font-bold text-gray-600">Judul</th>
                         <th class="text-left p-4 text-sm font-bold text-gray-600">Tipe</th>
                         <th class="text-left p-4 text-sm font-bold text-gray-600">Status</th>
@@ -22,6 +23,13 @@
                 <tbody>
                     @forelse ($pengumumen as $p)
                         <tr class="border-t border-gray-100 hover:bg-gray-50 transition">
+                            <td class="p-4">
+                                @if ($p->foto)
+                                    <img src="{{ asset('storage/' . $p->foto) }}" class="w-16 h-12 object-cover rounded-lg border">
+                                @else
+                                    <span class="text-xs text-gray-400">-</span>
+                                @endif
+                            </td>
                             <td class="p-4 font-semibold text-gray-900">{{ $p->judul }}</td>
                             <td class="p-4"><span class="text-xs px-2.5 py-1 rounded-full font-semibold bg-blue-100 text-blue-700">{{ ucfirst($p->tipe) }}</span></td>
                             <td class="p-4">
@@ -45,7 +53,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5" class="p-10 text-center text-gray-400">Belum ada pengumuman</td></tr>
+                        <tr><td colspan="6" class="p-10 text-center text-gray-400">Belum ada pengumuman</td></tr>
                     @endforelse
                 </tbody>
             </table>

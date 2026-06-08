@@ -96,11 +96,11 @@
                 <h2 class="font-extrabold text-lg text-gray-900 mb-5">📢 Pengumuman</h2>
                 <div class="space-y-3">
                     @forelse ($pengumumen as $p)
-                        <div class="p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition">
+                        <a href="{{ route('public.pengumuman') }}" class="block p-4 border border-gray-100 rounded-xl hover:bg-gray-50 transition">
                             <h3 class="font-bold text-gray-900">{{ $p->judul }}</h3>
                             <p class="text-sm text-gray-500 mt-1">{{ Str::limit($p->isi, 100) }}</p>
                             <span class="text-xs text-gray-400 mt-2 inline-block">{{ $p->created_at->format('d M Y') }}</span>
-                        </div>
+                        </a>
                     @empty
                         <p class="text-gray-400 text-center py-4">Belum ada pengumuman</p>
                     @endforelse
@@ -118,7 +118,7 @@
                             <h3 class="font-bold text-gray-900">{{ $v->pertanyaan }}</h3>
                             <div class="flex items-center justify-between mt-2">
                                 <span class="text-xs text-gray-400">{{ $v->pilihans->count() }} pilihan</span>
-                                <a href="{{ route('voting.show', $v) }}" class="text-sm text-primary-600 font-bold hover:text-primary-700">Ikut Voting →</a>
+                                <a href="{{ route('voting.index') }}" class="text-sm text-primary-600 font-bold hover:text-primary-700">Ikut Voting →</a>
                             </div>
                         </div>
                     @empty

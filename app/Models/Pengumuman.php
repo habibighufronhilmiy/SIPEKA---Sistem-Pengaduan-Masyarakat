@@ -9,6 +9,7 @@ class Pengumuman extends Model
     protected $fillable = [
         'judul',
         'isi',
+        'foto',
         'tipe',
         'lokasi',
         'tanggal_mulai',

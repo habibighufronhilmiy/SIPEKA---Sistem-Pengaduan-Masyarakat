@@ -52,6 +52,10 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                         Kirim Kritik/Saran
                     </a>
+                    <a href="{{ route('voting.index') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold transition {{ request()->routeIs('voting.*') ? 'bg-primary-50 text-primary-600' : 'text-gray-600 hover:bg-gray-100' }}">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        Voting
+                    </a>
 
                 @elseif ($role === 'petugas')
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-bold transition {{ request()->routeIs('dashboard') ? 'bg-primary-50 text-primary-600' : 'text-gray-600 hover:bg-gray-100' }}">

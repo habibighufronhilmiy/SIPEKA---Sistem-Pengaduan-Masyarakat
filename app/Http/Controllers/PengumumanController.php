@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AuditLog;
 use App\Models\Pengumuman;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PengumumanController extends Controller
 {
@@ -24,12 +25,17 @@ class PengumumanController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'tipe' => 'required|in:pengumuman,jadwal,kegiatan,pembangunan',
             'lokasi' => 'nullable|string|max:255',
             'tanggal_mulai' => 'nullable|date',
             'tanggal_selesai' => 'nullable|date|after:tanggal_mulai',
             'status' => 'required|in:draft,publish',
         ]);
+
+        if ($request->hasFile('foto')) {
+            $validated['foto'] = $request->file('foto')->store('pengumuman', 'public');
+        }
 
         $pengumuman = Pengumuman::create($validated);
 
@@ -49,12 +55,20 @@ class PengumumanController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'isi' => 'required|string',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'tipe' => 'required|in:pengumuman,jadwal,kegiatan,pembangunan',
             'lokasi' => 'nullable|string|max:255',
             'tanggal_mulai' => 'nullable|date',
             'tanggal_selesai' => 'nullable|date|after:tanggal_mulai',
             'status' => 'required|in:draft,publish',
         ]);
+
+        if ($request->hasFile('foto')) {
+            if ($pengumuman->foto) {
+                Storage::disk('public')->delete($pengumuman->foto);
+            }
+            $validated['foto'] = $request->file('foto')->store('pengumuman', 'public');
+        }
 
         $pengumuman->update($validated);
 
@@ -66,6 +80,9 @@ class PengumumanController extends Controller
 
     public function destroy(Pengumuman $pengumuman)
     {
+        if ($pengumuman->foto) {
+            Storage::disk('public')->delete($pengumuman->foto);
+        }
         AuditLog::log('Menghapus pengumuman', 'Menghapus pengumuman: ' . $pengumuman->judul, null, 'pengumuman');
         $pengumuman->delete();
         return redirect()->route('pengumuman.index')

@@ -4,7 +4,7 @@
             <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">📢 Buat Pengumuman</h1>
             <p class="text-gray-500 text-sm mt-1">Bagikan informasi ke seluruh pengguna</p>
         </div>
-        <form method="POST" action="{{ route('pengumuman.store') }}" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
+        <form method="POST" action="{{ route('pengumuman.store') }}" enctype="multipart/form-data" class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 md:p-8">
             @csrf
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Judul</label>
@@ -22,6 +22,11 @@
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Isi</label>
                 <textarea name="isi" rows="6" required class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition"></textarea>
+            </div>
+            <div class="mb-5">
+                <label class="block text-sm font-bold text-gray-700 mb-1.5">Foto / Poster</label>
+                <input type="file" name="foto" accept="image/*" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition">
+                <p class="text-xs text-gray-400 mt-1">Maks. 2MB. Format: JPEG, PNG, JPG, GIF, WebP.</p>
             </div>
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Lokasi</label>
