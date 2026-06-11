@@ -23,7 +23,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>SIPEKA - Sistem Pengaduan Aspirasi</h1>
+        <h1>SEKECAM - Sistem Elektronik Keluhan dan Aspirasi Kecamatan</h1>
         <p>Detail Pengaduan</p>
     </div>
 
@@ -103,7 +103,7 @@
     @endif
 
     <div class="footer">
-        Dicetak pada {{ date('d/m/Y H:i') }} &middot; SIPEKA &copy; {{ date('Y') }}
+        Dicetak pada {{ date('d/m/Y H:i') }} &middot; SEKECAM &copy; {{ date('Y') }}
     </div>
 </body>
 </html>

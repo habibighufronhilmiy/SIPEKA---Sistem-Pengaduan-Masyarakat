@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Daftar - SIPEKA</title>
+    <title>Daftar - SEKECAM</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     <style>
@@ -18,8 +18,8 @@
 
     <div class="w-full max-w-md px-4">
         <a href="{{ route('landing') }}" class="flex items-center justify-center gap-3 mb-8">
-            <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-12 w-12 rounded-full ring-4 ring-white/30">
-            <span class="text-white text-3xl font-extrabold tracking-tight">SIPEKA</span>
+            <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-12 w-12 rounded-full ring-4 ring-white/30">
+            <span class="text-white text-3xl font-extrabold tracking-tight">SEKECAM</span>
         </a>
 
         <div class="bg-white/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl">

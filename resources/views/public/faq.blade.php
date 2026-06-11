@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIPEKA - FAQ / Panduan</title>
+    <title>SEKECAM - FAQ / Panduan</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     <style>
@@ -15,8 +15,8 @@
     <header class="hero-grad">
         <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="/" class="flex items-center gap-2">
-                <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-9 w-9 rounded-full ring-2 ring-white/30">
-                <span class="text-white text-xl font-extrabold">SIPEKA</span>
+                <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-9 w-9 rounded-full ring-2 ring-white/30">
+                <span class="text-white text-xl font-extrabold">SEKECAM</span>
             </a>
             <div class="flex gap-2">
                 <a href="{{ route('login') }}" class="px-4 py-2 text-white border border-white/30 rounded-xl hover:bg-white/10 transition text-sm font-medium">Masuk</a>
@@ -25,15 +25,15 @@
         </nav>
         <div class="max-w-7xl mx-auto px-4 py-12 text-center">
             <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-2">❓ Panduan & FAQ</h1>
-            <p class="text-white/80">Semua yang perlu Anda ketahui tentang SIPEKA</p>
+            <p class="text-white/80">Semua yang perlu Anda ketahui tentang SEKECAM</p>
         </div>
     </header>
 
     <main class="max-w-3xl mx-auto px-4 py-8">
         <div class="space-y-4">
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-                <h3 class="font-bold text-lg text-gray-900 mb-1">📝 Apa itu SIPEKA?</h3>
-                <p class="text-gray-600">SIPEKA adalah Sistem Informasi Pengaduan, Aspirasi, dan Partisipasi Masyarakat. Platform ini memungkinkan warga untuk melaporkan keluhan, memberikan saran/kritik, dan berpartisipasi dalam voting desa secara digital.</p>
+                <h3 class="font-bold text-lg text-gray-900 mb-1">📝 Apa itu SEKECAM?</h3>
+                <p class="text-gray-600">SEKECAM adalah Sistem Elektronik Keluhan dan Aspirasi Kecamatan. Platform ini memungkinkan warga untuk melaporkan keluhan, memberikan saran/kritik, dan berpartisipasi dalam voting desa secara digital.</p>
             </div>
 
             <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
@@ -66,7 +66,7 @@
     <footer class="bg-gray-900 text-white py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400">
             <a href="/" class="hover:text-white transition">Kembali ke Beranda</a> &middot;
-            &copy; {{ date('Y') }} SIPEKA
+            &copy; {{ date('Y') }} SEKECAM
         </div>
     </footer>
 </body>

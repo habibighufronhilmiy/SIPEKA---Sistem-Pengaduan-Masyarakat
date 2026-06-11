@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIPEKA - {{ $title ?? config('app.name') }}</title>
+    <title>SEKECAM - {{ $title ?? config('app.name') }}</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     <style>
@@ -24,8 +24,8 @@
         <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out lg:static lg:inset-auto flex flex-col">
             <div class="flex items-center gap-2 h-16 px-5 border-b border-gray-100 shrink-0">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-9 w-9 rounded-full">
-                    <span class="text-xl font-extrabold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">SIPEKA</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-9 w-9 rounded-full">
+                    <span class="text-xl font-extrabold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">SEKECAM</span>
                 </a>
             </div>
             <nav class="flex-1 overflow-y-auto sidebar-scroll px-3 py-4 space-y-1">

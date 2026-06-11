@@ -10,7 +10,7 @@
 </style>
 </head>
 <body>
-    <h1>Laporan Pengaduan SIPEKA</h1>
+    <h1>Laporan Pengaduan SEKECAM</h1>
     <p>Tanggal: {{ date('d/m/Y') }}</p>
     <table>
         <thead>

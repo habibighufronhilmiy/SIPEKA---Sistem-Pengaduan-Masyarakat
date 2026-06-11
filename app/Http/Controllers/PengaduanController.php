@@ -171,11 +171,26 @@ class PengaduanController extends Controller
             abort(403);
         }
 
-        $pengaduan->load(['user', 'kategori', 'petugas', 'tanggapans.petugas', 'tanggapans.user', 'riwayats']);
+        try {
+            if (!app()->environment('local')) {
+                ini_set('memory_limit', '256M');
+                set_time_limit(120);
+            }
 
-        $pdf = app('dompdf.wrapper');
-        $pdf->loadView('pengaduan.pdf', compact('pengaduan'));
-        return $pdf->download('pengaduan-' . $pengaduan->kode_tracking . '.pdf');
+            $pengaduan->load(['user', 'kategori', 'petugas', 'tanggapans.petugas', 'tanggapans.user', 'riwayats']);
+
+            $pdf = app('dompdf.wrapper');
+            $pdf->loadView('pengaduan.pdf', compact('pengaduan'));
+            return $pdf->download('pengaduan-' . $pengaduan->kode_tracking . '.pdf');
+        } catch (\Exception $e) {
+            \Log::error('PDF Download Error: ' . $e->getMessage(), [
+                'pengaduan_id' => $pengaduan->id,
+                'user_id' => $user->id,
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+            return back()->with('error', 'Gagal mengunduh PDF. Silakan coba lagi atau hubungi administrator.');
+        }
     }
 
     public function storeTanggapan(Request $request, Pengaduan $pengaduan)

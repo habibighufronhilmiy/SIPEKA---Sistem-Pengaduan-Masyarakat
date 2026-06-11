@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="mb-8">
         <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">Halo, {{ auth()->user()->name }}! 👋</h1>
-        <p class="text-gray-500 mt-1">Selamat datang di dashboard SIPEKA</p>
+        <p class="text-gray-500 mt-1">Selamat datang di dashboard SEKECAM</p>
     </div>
 
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">

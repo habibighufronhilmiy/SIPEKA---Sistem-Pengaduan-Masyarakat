@@ -2,7 +2,7 @@
     <div class="flex justify-between items-center mb-6">
         <div>
             <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">👥 Kelola User</h1>
-            <p class="text-gray-500 text-sm mt-1">Manajemen pengguna sistem SIPEKA</p>
+            <p class="text-gray-500 text-sm mt-1">Manajemen pengguna sistem SEKECAM</p>
         </div>
         <a href="{{ route('admin.users.create') }}" class="inline-flex items-center gap-1.5 px-5 py-2.5 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-primary-500/20 transition">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>

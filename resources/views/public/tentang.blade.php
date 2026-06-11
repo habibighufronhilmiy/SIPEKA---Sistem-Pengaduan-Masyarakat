@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Tentang Kami - SIPEKA</title>
+    <title>Tentang Kami - SEKECAM</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     <style>
@@ -17,8 +17,8 @@
         <nav class="relative max-w-7xl mx-auto px-4 lg:px-6 py-3">
             <div class="flex items-center justify-between">
                 <a href="/" class="flex items-center gap-2.5">
-                    <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-9 w-9 rounded-full ring-2 ring-white/30">
-                    <span class="text-white text-xl font-extrabold">SIPEKA</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-9 w-9 rounded-full ring-2 ring-white/30">
+                    <span class="text-white text-xl font-extrabold">SEKECAM</span>
                 </a>
                 <div class="hidden lg:flex items-center gap-1">
                     <a href="{{ route('public.tracking') }}" class="px-3.5 py-2 text-sm font-semibold text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition">Lacak Pengaduan</a>
@@ -70,7 +70,7 @@
         </script>
         <div class="relative max-w-7xl mx-auto px-4 py-16 md:py-20 text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4">Tentang Kami</h1>
-            <p class="text-lg text-white/80 max-w-xl mx-auto">SIPEKA — Sistem Informasi Pengaduan, Aspirasi, dan Partisipasi Masyarakat</p>
+            <p class="text-lg text-white/80 max-w-xl mx-auto">SEKECAM — Sistem Elektronik Keluhan dan Aspirasi Kecamatan</p>
         </div>
         <div class="relative h-12 md:h-16">
             <div class="absolute bottom-0 left-0 right-0 h-full bg-gray-50" style="border-radius: 100% 100% 0 0 / 30px 30px 0 0;"></div>
@@ -79,12 +79,12 @@
 
     <section class="py-16 max-w-4xl mx-auto px-4">
         <div class="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12">
-            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6">Apa itu SIPEKA? 🤔</h2>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 mb-6">Apa itu SEKECAM? 🤔</h2>
             <p class="text-gray-600 leading-relaxed mb-6">
-                SIPEKA adalah platform digital yang memfasilitasi masyarakat untuk menyampaikan pengaduan, aspirasi, kritik, dan saran secara online. Dibangun dengan semangat transparansi dan responsivitas, SIPEKA memungkinkan setiap suara masyarakat didengar dan ditindaklanjuti oleh petugas terkait.
+                SEKECAM adalah platform digital yang memfasilitasi masyarakat untuk menyampaikan pengaduan, aspirasi, kritik, dan saran secara online. Dibangun dengan semangat transparansi dan responsivitas, SEKECAM memungkinkan setiap suara masyarakat didengar dan ditindaklanjuti oleh petugas terkait.
             </p>
             <p class="text-gray-600 leading-relaxed mb-6">
-                Dilengkapi dengan teknologi verifikasi AI, sistem tracking real-time, dan fitur partisipasi seperti voting, SIPEKA hadir sebagai solusi modern untuk meningkatkan kualitas pelayanan publik dan pembangunan desa.
+                Dilengkapi dengan teknologi verifikasi AI, sistem tracking real-time, dan fitur partisipasi seperti voting, SEKECAM hadir sebagai solusi modern untuk meningkatkan kualitas pelayanan publik dan pembangunan desa.
             </p>
 
             <h3 class="text-xl font-extrabold text-gray-900 mt-10 mb-5">🎯 Misi Kami</h3>
@@ -138,10 +138,10 @@
             <div class="grid md:grid-cols-3 gap-8 mb-8">
                 <div>
                     <div class="flex items-center gap-2 mb-3">
-                        <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-8 w-8 rounded-full">
-                        <span class="text-xl font-extrabold">SIPEKA</span>
+                        <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-8 w-8 rounded-full">
+                        <span class="text-xl font-extrabold">SEKECAM</span>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed">Sistem Informasi Pengaduan, Aspirasi, dan Partisipasi Masyarakat yang transparan dan responsif.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Sistem Elektronik Keluhan dan Aspirasi Kecamatan yang transparan dan responsif.</p>
                 </div>
                 <div>
                     <h4 class="font-bold mb-3">Navigasi</h4>
@@ -158,13 +158,13 @@
                 <div>
                     <h4 class="font-bold mb-3">Kontak</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>📧 hello@sipeka.test</li>
+                        <li>📧 hello@sekecam.test</li>
                         <li>📞 (021) 1234-5678</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-                &copy; {{ date('Y') }} SIPEKA. Dibuat dengan ❤️ untuk masyarakat.
+                &copy; {{ date('Y') }} SEKECAM. Dibuat dengan ❤️ untuk masyarakat.
             </div>
         </div>
     </footer>

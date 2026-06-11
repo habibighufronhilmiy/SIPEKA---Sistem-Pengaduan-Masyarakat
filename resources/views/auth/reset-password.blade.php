@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIPEKA - Reset Password</title>
+    <title>SEKECAM - Reset Password</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     <style>
@@ -15,8 +15,8 @@
     <div class="min-h-screen flex items-center justify-center p-4">
         <div class="w-full max-w-md">
             <a href="/" class="flex items-center justify-center gap-2 mb-8">
-                <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-10 w-10 rounded-full">
-                <span class="text-2xl font-extrabold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">SIPEKA</span>
+                <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-10 w-10 rounded-full">
+                <span class="text-2xl font-extrabold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent">SEKECAM</span>
             </a>
             <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-8">
                 <h1 class="text-2xl font-extrabold text-gray-900 mb-2">🔑 Reset Password</h1>

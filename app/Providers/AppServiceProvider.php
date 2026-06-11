@@ -17,5 +17,10 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
+
+        $fontsDir = storage_path('fonts');
+        if (!is_dir($fontsDir)) {
+            mkdir($fontsDir, 0755, true);
+        }
     }
 }

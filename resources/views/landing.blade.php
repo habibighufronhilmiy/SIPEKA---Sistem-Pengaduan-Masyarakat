@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIPEKA - Sistem Informasi Pengaduan Masyarakat</title>
+    <title>SEKECAM - Sistem Elektronik Keluhan dan Aspirasi Kecamatan</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     <style>
@@ -21,8 +21,8 @@
         <div class="max-w-7xl mx-auto px-4 lg:px-6">
             <div class="flex items-center justify-between h-16">
                 <a href="/" class="flex items-center gap-2.5 shrink-0 group">
-                    <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-8 w-8 lg:h-9 lg:w-9 rounded-full ring-2 ring-white/30 group-hover:ring-white/50 transition">
-                    <span class="text-white text-lg lg:text-xl font-extrabold tracking-tight">SIPEKA</span>
+                    <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-8 w-8 lg:h-9 lg:w-9 rounded-full ring-2 ring-white/30 group-hover:ring-white/50 transition">
+                    <span class="text-white text-lg lg:text-xl font-extrabold tracking-tight">SEKECAM</span>
                 </a>
                 <div class="hidden lg:flex items-center gap-0.5">
                     <a href="{{ route('login') }}" class="relative px-3.5 py-2 text-sm font-medium text-white/70 hover:text-white transition-colors">Masuk</a>
@@ -77,7 +77,7 @@
                 </div>
                 <div class="hidden md:flex justify-center">
                     <div class="relative">
-                        <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="w-72 h-72 rounded-full shadow-2xl float-anim ring-8 ring-white/20">
+                        <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="w-72 h-72 rounded-full shadow-2xl float-anim ring-8 ring-white/20">
                         <div class="absolute -bottom-4 -right-4 bg-white rounded-2xl p-4 shadow-xl">
                             <div class="flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-accent-500 animate-pulse"></span>
@@ -97,7 +97,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-16">
                 <span class="inline-block px-4 py-1.5 bg-accent-50 text-accent-600 text-sm font-semibold rounded-full mb-4">✨ FITUR UNGGULAN</span>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Kenapa Memilih SIPEKA?</h2>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Kenapa Memilih SEKECAM?</h2>
                 <p class="text-gray-500 mt-3 max-w-lg mx-auto">Platform pengaduan modern yang dirancang untuk kemudahan dan transparansi.</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -137,7 +137,7 @@
         <div class="max-w-7xl mx-auto px-4">
             <div class="text-center mb-14">
                 <span class="inline-block px-4 py-1.5 bg-primary-50 text-primary-600 text-sm font-semibold rounded-full mb-4">👥 PENGGUNA PLATFORM</span>
-                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Untuk Siapa SIPEKA?</h2>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-gray-900">Untuk Siapa SEKECAM?</h2>
                 <p class="text-gray-500 mt-3 max-w-lg mx-auto">Setiap peran memiliki pengalaman yang disesuaikan dengan kebutuhan.</p>
             </div>
             <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
@@ -233,10 +233,10 @@
             <div class="grid md:grid-cols-2 gap-8 mb-8">
                 <div>
                     <div class="flex items-center gap-2 mb-3">
-                        <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-8 w-8 rounded-full">
-                        <span class="text-xl font-extrabold">SIPEKA</span>
+                        <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-8 w-8 rounded-full">
+                        <span class="text-xl font-extrabold">SEKECAM</span>
                     </div>
-                    <p class="text-gray-400 text-sm leading-relaxed">Sistem Informasi Pengaduan, Aspirasi, dan Partisipasi Masyarakat yang transparan dan responsif.</p>
+                    <p class="text-gray-400 text-sm leading-relaxed">Sistem Elektronik Keluhan dan Aspirasi Kecamatan yang transparan dan responsif.</p>
                     <div class="flex items-center gap-3 mt-4">
                         <a href="#" class="w-9 h-9 rounded-lg bg-gray-800 hover:bg-primary-600 flex items-center justify-center transition"><svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.6c-.9.4-1.8.7-2.8.8 1-.6 1.8-1.6 2.2-2.7-1 .6-2 1-3.1 1.2-.9-1-2.2-1.6-3.6-1.6-2.7 0-4.9 2.2-4.9 4.9 0 .4 0 .8.1 1.1C7.7 8.1 4.1 6.1 1.7 3.1c-.4.7-.7 1.6-.7 2.5 0 1.7.9 3.2 2.2 4.1-.8 0-1.6-.2-2.2-.6v.1c0 2.4 1.7 4.4 3.9 4.8-.4.1-.8.2-1.3.2-.3 0-.6 0-.9-.1.6 2 2.4 3.4 4.6 3.4-1.7 1.3-3.8 2.1-6.1 2.1-.4 0-.8 0-1.2-.1 2.2 1.4 4.8 2.2 7.5 2.2 9.1 0 14-7.5 14-14v-.6c1-.7 1.8-1.6 2.5-2.6z"/></svg></a>
                         <a href="#" class="w-9 h-9 rounded-lg bg-gray-800 hover:bg-primary-600 flex items-center justify-center transition"><svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.2c6.6 0 12 5.4 12 12 0 5.3-3.4 9.8-8.2 11.4-.6.1-.8-.3-.8-.6v-4c0-1.4-.5-2.3-1-2.8 3.3-.4 6.8-1.6 6.8-7.4 0-1.6-.6-3-1.5-4-.1-.4-.7-2 .2-4.2 0 0 1.3-.4 4.2 1.6 1.2-.3 2.5-.5 3.8-.5s2.6.2 3.8.5c2.9-2 4.2-1.6 4.2-1.6.9 2.2.3 3.8.2 4.2 1 1 1.5 2.4 1.5 4 0 5.7-3.4 6.9-6.7 7.3.5.4 1 1.2 1 2.5v3.7c0 .3.2.7.8.6 4.8-1.6 8.2-6.1 8.2-11.4 0-6.6-5.4-12-12-12z"/></svg></a>
@@ -247,14 +247,14 @@
                 <div>
                     <h4 class="font-bold mb-3">Kontak</h4>
                     <ul class="space-y-3 text-sm text-gray-400">
-                        <li class="flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center shrink-0">📧</span> hello@sipeka.test</li>
+                        <li class="flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center shrink-0">📧</span> hello@sekecam.test</li>
                         <li class="flex items-center gap-2"><span class="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center shrink-0">📞</span> (021) 1234-5678</li>
 
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-800 pt-6 text-center text-sm text-gray-500">
-                &copy; {{ date('Y') }} SIPEKA. Dibuat dengan ❤️ untuk masyarakat.
+                &copy; {{ date('Y') }} SEKECAM. Dibuat dengan ❤️ untuk masyarakat.
             </div>
         </div>
     </footer>

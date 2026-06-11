@@ -53,10 +53,10 @@
                 <a href="{{ url('/tracking?kode=' . $pengaduan->kode_tracking) }}" class="btn">Lacak Pengaduan</a>
             </div>
 
-            <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">Terima kasih telah menggunakan SIPEKA.</p>
+            <p style="margin-top: 20px; color: #6b7280; font-size: 14px;">Terima kasih telah menggunakan SEKECAM.</p>
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} SIPEKA - Sistem Pengaduan Aspirasi. All rights reserved.
+            &copy; {{ date('Y') }} SEKECAM - Sistem Elektronik Keluhan dan Aspirasi Kecamatan. All rights reserved.
         </div>
     </div>
 </body>

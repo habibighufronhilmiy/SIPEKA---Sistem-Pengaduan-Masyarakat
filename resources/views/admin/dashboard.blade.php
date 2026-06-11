@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="mb-8">
         <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900">Dashboard Admin ⚡</h1>
-        <p class="text-gray-500 mt-1">Overview sistem SIPEKA</p>
+        <p class="text-gray-500 mt-1">Overview sistem SEKECAM</p>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 mb-8">

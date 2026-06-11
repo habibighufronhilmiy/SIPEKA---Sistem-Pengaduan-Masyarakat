@@ -11,8 +11,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::firstOrCreate(['email' => 'admin@sipeka.test'], [
-            'name' => 'Admin SIPEKA',
+        User::firstOrCreate(['email' => 'admin@sekecam.test'], [
+            'name' => 'Admin SEKECAM',
             'username' => 'admin',
             'password' => Hash::make('password'),
             'telepon' => '081234567890',
@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'admin',
         ]);
 
-        User::firstOrCreate(['email' => 'petugas1@sipeka.test'], [
+        User::firstOrCreate(['email' => 'petugas1@sekecam.test'], [
             'name' => 'Petugas 1',
             'username' => 'petugas1',
             'password' => Hash::make('password'),
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'role' => 'petugas',
         ]);
 
-        User::firstOrCreate(['email' => 'masyarakat1@sipeka.test'], [
+        User::firstOrCreate(['email' => 'masyarakat1@sekecam.test'], [
             'name' => 'Masyarakat 1',
             'username' => 'masyarakat1',
             'password' => Hash::make('password'),

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SIPEKA - Lacak Pengaduan</title>
+    <title>SEKECAM - Lacak Pengaduan</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css'])
     <style>
@@ -15,8 +15,8 @@
     <header class="hero-grad">
         <nav class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="/" class="flex items-center gap-2">
-                <img src="{{ asset('images/logo.png') }}" alt="SIPEKA" class="h-9 w-9 rounded-full ring-2 ring-white/30">
-                <span class="text-white text-xl font-extrabold">SIPEKA</span>
+                <img src="{{ asset('images/logo.png') }}" alt="SEKECAM" class="h-9 w-9 rounded-full ring-2 ring-white/30">
+                <span class="text-white text-xl font-extrabold">SEKECAM</span>
             </a>
             <div class="flex gap-2">
                 <a href="{{ route('login') }}" class="px-4 py-2 text-white border border-white/30 rounded-xl hover:bg-white/10 transition text-sm font-medium">Masuk</a>
@@ -126,7 +126,7 @@
     <footer class="bg-gray-900 text-white py-8 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-400">
             <a href="/" class="hover:text-white transition">Kembali ke Beranda</a> &middot;
-            &copy; {{ date('Y') }} SIPEKA
+            &copy; {{ date('Y') }} SEKECAM
         </div>
     </footer>
 </body>
