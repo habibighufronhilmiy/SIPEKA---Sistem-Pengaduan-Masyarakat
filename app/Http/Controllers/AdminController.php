@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PetugasAssignedMail;
 use App\Models\AuditLog;
 use App\Models\Kategori;
+use App\Models\Notifikasi;
 use App\Models\Pengaduan;
+use App\Models\RiwayatPengaduan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
@@ -153,6 +158,44 @@ class AdminController extends Controller
     {
         $pengaduan->load(['user', 'kategori', 'petugas', 'media', 'riwayats', 'tanggapans.petugas', 'tanggapans.user', 'rating']);
         return view('admin.pengaduan.show', compact('pengaduan'));
+    }
+
+    public function assignPetugas(Request $request, Pengaduan $pengaduan)
+    {
+        $request->validate([
+            'id_petugas' => 'required|exists:users,id',
+        ]);
+
+        $petugas = User::findOrFail($request->id_petugas);
+
+        $pengaduan->update(['id_petugas' => $petugas->id]);
+
+        RiwayatPengaduan::create([
+            'id_pengaduan' => $pengaduan->id,
+            'status' => $pengaduan->status,
+            'keterangan' => 'Ditugaskan kepada: ' . $petugas->name,
+        ]);
+
+        Notifikasi::create([
+            'id_user' => $petugas->id,
+            'id_pengaduan' => $pengaduan->id,
+            'judul' => 'Penugasan Baru',
+            'pesan' => 'Anda ditugaskan untuk menangani pengaduan: ' . $pengaduan->judul,
+            'tipe' => 'info',
+        ]);
+
+        $pengaduan->load('user');
+        if ($pengaduan->user->email) {
+            try {
+                Mail::to($pengaduan->user->email)->queue(new PetugasAssignedMail($pengaduan, $petugas->name));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email penugasan: ' . $e->getMessage());
+            }
+        }
+
+        AuditLog::log('Assign petugas', 'Menugaskan ' . $petugas->name . ' ke pengaduan: ' . $pengaduan->judul, $pengaduan, 'pengaduan');
+
+        return back()->with('success', 'Petugas berhasil ditugaskan.');
     }
 
     public function pengaduanDestroy(Pengaduan $pengaduan)

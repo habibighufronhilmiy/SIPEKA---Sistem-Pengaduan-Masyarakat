@@ -81,7 +81,7 @@ class PetugasController extends Controller
         $pengaduan->load('user');
         if ($pengaduan->user->email) {
             try {
-                Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
+                Mail::to($pengaduan->user->email)->queue(new PengaduanStatusMail(
                     $pengaduan,
                     $request->status === 'diverifikasi' ? 'Diverifikasi' : 'Ditolak',
                     $pesanNotif
@@ -131,7 +131,7 @@ class PetugasController extends Controller
         $pengaduan->load('user');
         if ($pengaduan->user->email) {
             try {
-                Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
+                Mail::to($pengaduan->user->email)->queue(new PengaduanStatusMail(
                     $pengaduan,
                     'Diproses',
                     'Pengaduan Anda sedang dalam proses penanganan oleh petugas.'
@@ -193,7 +193,7 @@ class PetugasController extends Controller
         $pengaduan->load('user');
         if ($pengaduan->user->email) {
             try {
-                Mail::to($pengaduan->user->email)->send(new PengaduanStatusMail(
+                Mail::to($pengaduan->user->email)->queue(new PengaduanStatusMail(
                     $pengaduan,
                     'Selesai',
                     'Pengaduan Anda telah selesai ditangani. Silakan berikan rating melalui aplikasi.'
@@ -203,7 +203,7 @@ class PetugasController extends Controller
             }
 
             try {
-                Mail::to($pengaduan->user->email)->send(new TanggapanMail($pengaduan, $request->isi_tanggapan));
+                Mail::to($pengaduan->user->email)->queue(new TanggapanMail($pengaduan, $request->isi_tanggapan));
             } catch (\Exception $e) {
                 Log::error('Gagal kirim email tanggapan: ' . $e->getMessage());
             }

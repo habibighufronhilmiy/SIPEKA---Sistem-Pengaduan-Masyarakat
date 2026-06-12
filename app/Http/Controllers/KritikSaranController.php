@@ -52,7 +52,7 @@ class KritikSaranController extends Controller
             ]);
 
             if ($petugas->email) {
-                Mail::to($petugas->email)->send(new KritikSaranMail($kritikSaran, 'baru'));
+                Mail::to($petugas->email)->queue(new KritikSaranMail($kritikSaran, 'baru'));
             }
         }
 
@@ -65,7 +65,7 @@ class KritikSaranController extends Controller
 
         $user = Auth::user();
         if ($user->email) {
-            Mail::to($user->email)->send(new KritikSaranMail($kritikSaran, 'baru'));
+            Mail::to($user->email)->queue(new KritikSaranMail($kritikSaran, 'baru'));
         }
 
         return redirect()->route('kritik-saran.index')
@@ -124,7 +124,7 @@ class KritikSaranController extends Controller
 
         $kritikSaran->load('user');
         if ($kritikSaran->user->email) {
-            Mail::to($kritikSaran->user->email)->send(new KritikSaranMail($kritikSaran, 'tanggapan'));
+            Mail::to($kritikSaran->user->email)->queue(new KritikSaranMail($kritikSaran, 'tanggapan'));
         }
 
         AuditLog::log('Menanggapi kritik/saran', 'Memberi tanggapan untuk ' . $kritikSaran->kategori . ': ' . $kritikSaran->judul, $kritikSaran, 'kritik_saran');

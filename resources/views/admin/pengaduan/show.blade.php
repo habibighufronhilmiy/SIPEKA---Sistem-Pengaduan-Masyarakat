@@ -134,6 +134,25 @@
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
                     <h3 class="font-bold text-gray-900 mb-3">📄 Aksi</h3>
                     <div class="space-y-3">
+                        @if (!$pengaduan->id_petugas && $pengaduan->status !== 'selesai' && $pengaduan->status !== 'ditolak')
+                            <form action="{{ route('admin.pengaduan.assign', $pengaduan) }}" method="POST" class="space-y-2">
+                                @csrf
+                                <select name="id_petugas" class="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-primary-500">
+                                    <option value="">-- Pilih Petugas --</option>
+                                    @foreach (\App\Models\User::where('role', 'petugas')->get() as $petugas)
+                                        <option value="{{ $petugas->id }}">{{ $petugas->name }}</option>
+                                    @endforeach
+                                </select>
+                                <button type="submit" class="w-full py-2.5 bg-primary-600 text-white rounded-xl font-bold text-sm hover:bg-primary-700 transition">
+                                    Tugaskan Petugas
+                                </button>
+                            </form>
+                        @elseif ($pengaduan->id_petugas)
+                            <div class="p-3 bg-gray-50 rounded-xl">
+                                <p class="text-xs text-gray-400">Ditugaskan kepada:</p>
+                                <p class="font-bold text-gray-900">{{ $pengaduan->petugas->name }}</p>
+                            </div>
+                        @endif
                         <a href="{{ route('pengaduan.pdf', $pengaduan) }}" target="_blank" class="block w-full text-center py-2.5 bg-red-50 text-red-700 rounded-xl font-bold hover:bg-red-100 transition">
                             <svg class="w-5 h-5 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
                             Download PDF
