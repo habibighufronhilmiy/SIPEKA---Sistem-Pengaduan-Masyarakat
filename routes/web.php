@@ -137,12 +137,59 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/debug-mail', function () {
-    try {
-        \Illuminate\Support\Facades\Mail::raw('Test email from Railway', function ($msg) {
-            $msg->to('habibighufron23@gmail.com')->subject('Debug Test Railway');
-        });
-        return 'EMAIL OK';
-    } catch (\Exception $e) {
-        return 'ERROR: ' . $e->getMessage() . ' | ' . get_class($e);
+    $results = [];
+
+    $results['env'] = [
+        'MAIL_MAILER' => env('MAIL_MAILER'),
+        'MAIL_HOST' => env('MAIL_HOST'),
+        'MAIL_PORT' => env('MAIL_PORT'),
+        'MAIL_ENCRYPTION' => env('MAIL_ENCRYPTION'),
+        'MAIL_USERNAME' => env('MAIL_USERNAME'),
+        'MAIL_PASSWORD' => env('MAIL_PASSWORD') ? '***SET***' : '***NOT SET***',
+        'MAIL_FROM_ADDRESS' => env('MAIL_FROM_ADDRESS'),
+    ];
+
+    // Test socket connection
+    $host = env('MAIL_HOST', 'smtp.gmail.com');
+    $port = (int) env('MAIL_PORT', 587);
+    $encryption = env('MAIL_ENCRYPTION', 'tls');
+
+    $socketHost = $encryption === 'ssl' ? 'ssl://' . $host : $host;
+    $results['socket_test'] = [];
+
+    $errno = null;
+    $errstr = null;
+    $sock = @fsockopen($socketHost, $port, $errno, $errstr, 10);
+    if ($sock) {
+        $results['socket_test']['status'] = 'CONNECTED';
+        $results['socket_test']['info'] = "Successfully connected to $socketHost:$port";
+        fclose($sock);
+    } else {
+        $results['socket_test']['status'] = 'FAILED';
+        $results['socket_test']['info'] = "errno=$errno errstr=$errstr";
     }
+
+    // Test full SMTP send with short timeout
+    config(['mail.mailers.smtp.timeout' => 15]);
+    config(['mail.mailers.smtp.stream.ssl' => [
+        'allow_self_signed' => true,
+        'verify_peer' => false,
+        'verify_peer_name' => false,
+    ]]);
+
+    try {
+        $start = microtime(true);
+        \Illuminate\Support\Facades\Mail::raw('Test email from Railway debug endpoint', function ($msg) {
+            $msg->to('habibighufron23@gmail.com')->subject('Debug Test Railway - ' . date('Y-m-d H:i:s'));
+        });
+        $elapsed = round(microtime(true) - $start, 2);
+        $results['mail_send']['status'] = 'OK';
+        $results['mail_send']['elapsed'] = "{$elapsed}s";
+    } catch (\Exception $e) {
+        $results['mail_send']['status'] = 'FAILED';
+        $results['mail_send']['error'] = $e->getMessage();
+        $results['mail_send']['class'] = get_class($e);
+    }
+
+    return response()->json($results);
 });
