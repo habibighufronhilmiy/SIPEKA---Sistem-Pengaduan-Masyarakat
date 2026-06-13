@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\PengaduanCreatedMail;
 use App\Mail\PengaduanStatusMail;
 use App\Mail\TanggapanMail;
 
@@ -83,6 +84,8 @@ class PengaduanController extends Controller
                 ->with('success', 'Draft pengaduan berhasil disimpan.');
         }
 
+        $this->kirimEmailPengaduanDibuat($pengaduan);
+
         $this->prosesAiVerifikasi($pengaduan);
 
         AuditLog::log('Membuat pengaduan', 'Membuat pengaduan: ' . $pengaduan->judul, $pengaduan, 'pengaduan');
@@ -139,6 +142,10 @@ class PengaduanController extends Controller
         }
 
         $pengaduan->update(['draft' => false]);
+
+        $pengaduan->load('user');
+
+        $this->kirimEmailPengaduanDibuat($pengaduan);
 
         $this->prosesAiVerifikasi($pengaduan);
 
@@ -238,6 +245,19 @@ class PengaduanController extends Controller
         }
 
         return back()->with('success', 'Tanggapan berhasil dikirim.');
+    }
+
+    private function kirimEmailPengaduanDibuat(Pengaduan $pengaduan): void
+    {
+        $pengaduan->load('user', 'kategori');
+
+        if ($pengaduan->user->email) {
+            try {
+                Mail::to($pengaduan->user->email)->send(new PengaduanCreatedMail($pengaduan));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email pengaduan dibuat: ' . $e->getMessage());
+            }
+        }
     }
 
     private function prosesAiVerifikasi(Pengaduan $pengaduan): void

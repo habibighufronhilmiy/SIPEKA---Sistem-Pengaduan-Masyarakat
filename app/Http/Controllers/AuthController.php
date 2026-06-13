@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -47,10 +50,19 @@ class AuthController extends Controller
             'alamat' => 'nullable|string',
         ]);
 
+        $passwordPlain = $validated['password'];
         $validated['password'] = Hash::make($validated['password']);
         $validated['role'] = 'masyarakat';
 
         $user = User::create($validated);
+
+        if ($user->email) {
+            try {
+                Mail::to($user->email)->send(new WelcomeMail($user, $passwordPlain));
+            } catch (\Exception $e) {
+                Log::error('Gagal kirim email welcome: ' . $e->getMessage());
+            }
+        }
 
         Auth::login($user);
 
