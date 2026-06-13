@@ -76,7 +76,7 @@
                 <div class="space-y-4">
                     @foreach ($pengaduan->tanggapans as $t)
                         @php $penulis = $t->petugas ?? $t->user; @endphp
-                        <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+                        <div class="p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
                             <div class="flex items-center gap-2 mb-2">
                                 <div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">{{ strtoupper(substr($penulis->name, 0, 1)) }}</div>
                                 <p class="font-bold text-gray-900 dark:text-white text-sm">{{ $penulis->name }} <span class="text-xs text-gray-500 dark:text-gray-400 font-normal">{{ $t->petugas ? '(Petugas)' : '(Anda)' }}</span></p>

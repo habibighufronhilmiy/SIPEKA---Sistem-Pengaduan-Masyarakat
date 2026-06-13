@@ -92,7 +92,7 @@
                     <div class="border-t pt-6 mt-6">
                         <h3 class="font-bold text-gray-900 mb-4">💬 Tanggapan Petugas</h3>
                         @foreach ($pengaduan->tanggapans as $t)
-                            <div class="bg-gray-50 dark:bg-gray-800 rounded-xl p-4 mb-3">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl p-4 mb-3">
                                 <div class="flex items-center gap-2 mb-2">
                                     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">{{ substr($t->petugas?->name ?? 'P', 0, 1) }}</div>
                                     <div>
