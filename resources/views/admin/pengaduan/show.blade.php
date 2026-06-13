@@ -103,12 +103,12 @@
                         @foreach ($pengaduan->tanggapans as $t)
                             <div class="flex gap-3 mb-4 last:mb-0">
                                 <div class="w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-sm font-bold shrink-0">{{ substr($t->petugas?->name ?? 'P', 0, 1) }}</div>
-                                <div class="flex-1 bg-gray-50 rounded-xl p-4">
+                                <div class="flex-1 bg-gray-50 dark:bg-gray-800 rounded-xl p-4">
                                     <div class="flex items-center justify-between mb-1">
-                                        <span class="font-bold text-sm text-gray-900">{{ $t->petugas?->name ?? 'Petugas' }}</span>
-                                        <span class="text-xs text-gray-400">{{ $t->created_at->format('d/m/Y H:i') }}</span>
+                                        <span class="font-bold text-sm text-gray-900 dark:text-white">{{ $t->petugas?->name ?? 'Petugas' }}</span>
+                                        <span class="text-xs text-gray-400 dark:text-gray-300">{{ $t->created_at->format('d/m/Y H:i') }}</span>
                                     </div>
-                                    <p class="text-sm text-gray-700">{{ $t->isi_tanggapan }}</p>
+                                    <p class="text-sm text-gray-700 dark:text-gray-300">{{ $t->isi_tanggapan }}</p>
                                 </div>
                             </div>
                         @endforeach
