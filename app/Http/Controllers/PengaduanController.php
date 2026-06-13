@@ -273,7 +273,7 @@ class PengaduanController extends Controller
 
             if ($user->email) {
                 try {
-                    Mail::to($user->email)->queue(new PengaduanStatusMail(
+                    Mail::to($user->email)->send(new PengaduanStatusMail(
                         $pengaduan,
                         'Diverifikasi',
                         'Pengaduan Anda telah diverifikasi oleh sistem AI dan akan segera diproses petugas.'
@@ -293,7 +293,7 @@ class PengaduanController extends Controller
 
             if ($user->email) {
                 try {
-                    Mail::to($user->email)->queue(new PengaduanStatusMail(
+                    Mail::to($user->email)->send(new PengaduanStatusMail(
                         $pengaduan,
                         'Ditolak',
                         'Maaf, pengaduan Anda ditolak. Alasan: ' . $hasil['alasan']
@@ -319,7 +319,7 @@ class PengaduanController extends Controller
 
         if ($pengaduan->user->email) {
             try {
-                Mail::to($pengaduan->user->email)->queue(new TanggapanMail($pengaduan, $isiTanggapan));
+                Mail::to($pengaduan->user->email)->send(new TanggapanMail($pengaduan, $isiTanggapan));
             } catch (\Exception $e) {
                 Log::error('Gagal kirim email tanggapan: ' . $e->getMessage());
             }

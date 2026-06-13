@@ -187,7 +187,7 @@ class AdminController extends Controller
         $pengaduan->load('user');
         if ($pengaduan->user->email) {
             try {
-                Mail::to($pengaduan->user->email)->queue(new PetugasAssignedMail($pengaduan, $petugas->name));
+                Mail::to($pengaduan->user->email)->send(new PetugasAssignedMail($pengaduan, $petugas->name));
             } catch (\Exception $e) {
                 Log::error('Gagal kirim email penugasan: ' . $e->getMessage());
             }
