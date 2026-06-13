@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 
 class ForgotPasswordController extends Controller
@@ -16,11 +17,16 @@ class ForgotPasswordController extends Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        $status = Password::sendResetLink($request->only('email'));
+        try {
+            $status = Password::sendResetLink($request->only('email'));
 
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with('success', 'Link reset password telah dikirim ke email Anda.')
-            : back()->withErrors(['email' => 'Email tidak ditemukan.']);
+            return $status === Password::RESET_LINK_SENT
+                ? back()->with('success', 'Link reset password telah dikirim ke email Anda.')
+                : back()->withErrors(['email' => 'Email tidak ditemukan.']);
+        } catch (\Exception $e) {
+            Log::error('Gagal kirim reset link: ' . $e->getMessage());
+            return back()->withErrors(['email' => 'Gagal mengirim email. Silakan coba lagi nanti.']);
+        }
     }
 
     public function showResetForm(string $token)
