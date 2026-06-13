@@ -68,16 +68,16 @@
                         <div class="mt-6 space-y-4">
                             @foreach ($pengaduan->tanggapans as $t)
                                 @php $penulis = $t->petugas ?? $t->user; @endphp
-                                <div class="p-4 bg-gradient-to-r from-primary-50 to-accent-50 rounded-xl border border-primary-100">
+                                <div class="p-4 bg-gray-50 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
                                     <div class="flex items-center gap-2 mb-2">
                                         <div class="w-7 h-7 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xs font-bold">{{ strtoupper(substr($penulis->name, 0, 1)) }}</div>
-                                        <p class="font-bold text-gray-900 text-sm">{{ $penulis->name }} <span class="text-xs text-gray-400 font-normal">{{ $t->petugas ? '(Petugas)' : '(Masyarakat)' }}</span></p>
+                                        <p class="font-bold text-gray-900 text-sm">{{ $penulis->name }} <span class="text-xs text-gray-500 font-normal">{{ $t->petugas ? '(Petugas)' : '(Masyarakat)' }}</span></p>
                                     </div>
-                                    <p class="text-gray-700">{{ $t->isi_tanggapan }}</p>
+                                    <p class="text-gray-700 dark:text-gray-300">{{ $t->isi_tanggapan }}</p>
                                     @if ($t->bukti_foto)
                                         <img src="{{ asset('storage/' . $t->bukti_foto) }}" class="mt-2 rounded-xl max-w-xs border">
                                     @endif
-                                    <p class="text-xs text-gray-400 mt-2">{{ $t->created_at->diffForHumans() }}</p>
+                                    <p class="text-xs text-gray-500 mt-2">{{ $t->created_at->diffForHumans() }}</p>
                                 </div>
                             @endforeach
                         </div>

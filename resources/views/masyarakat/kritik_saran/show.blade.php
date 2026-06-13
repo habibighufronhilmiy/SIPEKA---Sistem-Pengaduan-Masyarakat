@@ -35,18 +35,18 @@
         </div>
 
         @if ($kritikSaran->tanggapan)
-            <div class="bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl border border-primary-100 shadow-sm p-6 md:p-8">
+            <div class="bg-gray-50 dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm p-6 md:p-8">
                 <div class="flex items-center gap-3 mb-4">
                     <div class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold text-sm">
                         {{ substr($kritikSaran->petugas?->name ?? 'Petugas', 0, 1) }}
                     </div>
                     <div>
                         <p class="font-bold text-gray-900">{{ $kritikSaran->petugas?->name ?? 'Petugas' }}</p>
-                        <p class="text-xs text-gray-400">{{ $kritikSaran->tanggapan_at?->format('d/m/Y H:i') }}</p>
+                        <p class="text-xs text-gray-500">{{ $kritikSaran->tanggapan_at?->format('d/m/Y H:i') }}</p>
                     </div>
                 </div>
-                <div class="bg-white/80 rounded-xl p-4 border border-primary-100">
-                    <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">{{ $kritikSaran->tanggapan }}</p>
+                <div class="bg-white dark:bg-gray-700 rounded-xl p-4 border border-gray-200 dark:border-gray-600">
+                    <p class="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">{{ $kritikSaran->tanggapan }}</p>
                 </div>
             </div>
         @endif
