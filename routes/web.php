@@ -136,6 +136,31 @@ Route::middleware('auth')->group(function () {
     });
 });
 
+Route::get('/backup-users', function () {
+    $users = \App\Models\User::all()->map(function ($u) {
+        return [
+            'name' => $u->name,
+            'username' => $u->username,
+            'email' => $u->email,
+            'password' => $u->password,
+            'telepon' => $u->telepon,
+            'alamat' => $u->alamat,
+            'role' => $u->role,
+            'foto_profil' => $u->foto_profil,
+            'social_id' => $u->social_id,
+            'social_type' => $u->social_type,
+            'email_verified_at' => $u->email_verified_at,
+            'created_at' => $u->created_at,
+            'updated_at' => $u->updated_at,
+        ];
+    });
+
+    return response()->json([
+        'total' => $users->count(),
+        'users' => $users,
+    ])->header('Content-Disposition', 'attachment; filename=backup-users-' . date('Y-m-d') . '.json');
+});
+
 Route::get('/debug-mail', function () {
     $results = [];
 
