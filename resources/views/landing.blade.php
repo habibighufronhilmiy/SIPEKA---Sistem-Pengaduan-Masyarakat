@@ -77,9 +77,9 @@
                 </div>
                 <div class="flex justify-center items-center">
                     <div class="relative w-full max-w-lg">
-                        <div class="relative rounded-2xl overflow-hidden shadow-2xl ring-8 ring-white/20 aspect-video">
-                            <iframe src="https://www.youtube.com/embed/DEo1_Av7at8" title="SEKECAM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute inset-0 w-full h-full"></iframe>
-                        </div>
+<div class="relative rounded-2xl overflow-hidden shadow-2xl ring-8 ring-white/20" style="padding-bottom: 56.25%;">
+    <iframe src="https://www.youtube.com/embed/DEo1_Av7at8" title="SEKECAM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute inset-0 w-full h-full"></iframe>
+</div>
                         <div class="absolute -bottom-4 -right-4 bg-white rounded-2xl p-4 shadow-xl">
                             <div class="flex items-center gap-2">
                                 <span class="w-3 h-3 rounded-full bg-accent-500 animate-pulse"></span>
