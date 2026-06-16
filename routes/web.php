@@ -20,23 +20,7 @@ Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
-Route::match(['get','post'],'/test-post', function (\Illuminate\Http\Request $r) {
-    return 'TEST OK: ' . $r->method() . ' ' . ($r->input('test') ?? 'no-data');
-})->name('test-post');
 
-Route::get('/debug-session', function (\Illuminate\Http\Request $r) {
-    $info = [
-        'session_id' => session()->getId(),
-        'session_exists' => session()->exists('_token'),
-        'csrf_token' => csrf_token(),
-        'user' => auth()->check() ? auth()->user()->only(['id','name','email','role']) : null,
-        'cookie' => $r->cookies->all(),
-        'secure' => $r->isSecure(),
-        'scheme' => $r->getScheme(),
-        'host' => $r->getHost(),
-    ];
-    return response()->json($info);
-});
 
 // Public routes (no login needed)
 Route::post('/tracking', [PublicController::class, 'trackingCek'])->name('public.tracking.cek');
