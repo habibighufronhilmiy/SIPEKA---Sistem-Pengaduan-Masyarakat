@@ -20,6 +20,10 @@ Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
+Route::match(['get','post'],'/test-post', function (\Illuminate\Http\Request $r) {
+    return 'TEST OK: ' . $r->method() . ' ' . ($r->input('test') ?? 'no-data');
+})->name('test-post');
+
 // Public routes (no login needed)
 Route::post('/tracking', [PublicController::class, 'trackingCek'])->name('public.tracking.cek');
 Route::get('/tracking', [PublicController::class, 'tracking'])->name('public.tracking');
