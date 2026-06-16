@@ -75,7 +75,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="hidden md:flex justify-center items-center">
+                <div class="flex justify-center items-center">
                     <div class="relative w-full max-w-lg">
                         <div class="relative rounded-2xl overflow-hidden shadow-2xl ring-8 ring-white/20 aspect-video">
                             <iframe src="https://www.youtube.com/embed/DEo1_Av7at8" title="SEKECAM" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute inset-0 w-full h-full"></iframe>
