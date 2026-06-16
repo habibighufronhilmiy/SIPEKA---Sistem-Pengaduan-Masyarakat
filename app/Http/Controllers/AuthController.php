@@ -26,12 +26,27 @@ class AuthController extends Controller
 
         $field = filter_var($credentials['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if (Auth::attempt([$field => $credentials['login'], 'password' => $credentials['password']])) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'));
-        }
+        try {
+            $cekUser = User::where($field, $credentials['login'])->first();
+            if (!$cekUser) {
+                Log::error('LOGIN_DEBUG: User not found for ' . $field . '=' . $credentials['login']);
+                return back()->withErrors(['login' => 'Login atau password salah.'])->onlyInput('login');
+            }
+            Log::info('LOGIN_DEBUG: User found', ['id' => $cekUser->id, 'email' => $cekUser->email, 'role' => $cekUser->role]);
 
-        return back()->withErrors(['login' => 'Login atau password salah.'])->onlyInput('login');
+            if (Auth::attempt([$field => $credentials['login'], 'password' => $credentials['password']])) {
+                Log::info('LOGIN_DEBUG: Auth::attempt SUCCESS', ['id' => $cekUser->id]);
+                $request->session()->regenerate();
+                Log::info('LOGIN_DEBUG: Session regenerated, redirecting to dashboard');
+                return redirect()->intended(route('dashboard'));
+            }
+
+            Log::warning('LOGIN_DEBUG: Auth::attempt FAILED', ['field' => $field, 'login' => $credentials['login']]);
+            return back()->withErrors(['login' => 'Login atau password salah.'])->onlyInput('login');
+        } catch (\Exception $e) {
+            Log::error('LOGIN_DEBUG: Exception ' . get_class($e) . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+            return back()->withErrors(['login' => 'Terjadi kesalahan: ' . $e->getMessage()])->onlyInput('login');
+        }
     }
 
     public function showRegister()
