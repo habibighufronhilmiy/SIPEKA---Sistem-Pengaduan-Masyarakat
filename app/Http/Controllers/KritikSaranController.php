@@ -49,6 +49,7 @@ class KritikSaranController extends Controller
                 'judul' => 'Kritik & Saran Baru',
                 'pesan' => 'Ada ' . $validated['kategori'] . ' baru dari ' . Auth::user()->name . ': ' . $validated['judul'],
                 'tipe' => 'info',
+                'url' => route('kelola-kritik-saran.show', $kritikSaran),
             ]);
 
             if ($petugas->email) {
@@ -61,6 +62,7 @@ class KritikSaranController extends Controller
             'judul' => 'Kritik & Saran Terkirim',
             'pesan' => '' . ucfirst($validated['kategori']) . ' Anda berhasil dikirim dan akan ditanggapi oleh petugas.',
             'tipe' => 'success',
+            'url' => route('kritik-saran.show', $kritikSaran),
         ]);
 
         $user = Auth::user();
@@ -74,7 +76,7 @@ class KritikSaranController extends Controller
 
     public function show(KritikSaran $kritikSaran)
     {
-        if ($kritikSaran->id_user !== Auth::id()) {
+        if ((int) $kritikSaran->id_user !== (int) Auth::id()) {
             abort(403);
         }
 
@@ -120,6 +122,7 @@ class KritikSaranController extends Controller
             'judul' => 'Tanggapan ' . ucfirst($kritikSaran->kategori),
             'pesan' => Auth::user()->name . ' telah memberikan tanggapan untuk ' . $kritikSaran->kategori . ' Anda: "' . $kritikSaran->judul . '"',
             'tipe' => 'info',
+            'url' => route('kritik-saran.show', $kritikSaran),
         ]);
 
         $kritikSaran->load('user');
