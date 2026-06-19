@@ -126,6 +126,10 @@ class AdminController extends Controller
 
     public function kategorisDestroy(Kategori $kategori)
     {
+        if ($kategori->pengaduans()->exists()) {
+            return back()->with('error', 'Kategori tidak bisa dihapus karena masih digunakan oleh pengaduan.');
+        }
+
         AuditLog::log('Menghapus kategori', 'Menghapus kategori: ' . $kategori->nama_kategori, null, 'kategori');
         $kategori->delete();
         return back()->with('success', 'Kategori berhasil dihapus.');

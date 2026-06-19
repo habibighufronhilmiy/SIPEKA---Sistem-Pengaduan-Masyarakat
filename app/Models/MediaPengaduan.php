@@ -10,6 +10,7 @@ class MediaPengaduan extends Model
         'id_pengaduan',
         'file_path',
         'file_type',
+        'file_hash',
     ];
 
     public function pengaduan()

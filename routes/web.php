@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KritikSaranController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\PetugasController;
@@ -56,20 +57,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::post('/profile/password', [ProfileController::class, 'password'])->name('profile.password');
 
-    Route::get('/notifikasi', function () {
-        $notifikasis = \App\Models\Notifikasi::where('id_user', auth()->id())->latest()->paginate(20);
-        return view('notifikasi.index', compact('notifikasis'));
-    })->name('notifikasi.index');
-
-    Route::post('/notifikasi/read/{notifikasi}', function (\App\Models\Notifikasi $notifikasi) {
-        $notifikasi->update(['is_read' => true]);
-        return back();
-    })->name('notifikasi.read');
-
-    Route::post('/notifikasi/read-all', function () {
-        \App\Models\Notifikasi::where('id_user', auth()->id())->update(['is_read' => true]);
-        return back();
-    })->name('notifikasi.readAll');
+    Route::get('/notifikasi', [NotificationController::class, 'index'])->name('notifikasi.index');
+    Route::post('/notifikasi/read/{notifikasi}', [NotificationController::class, 'read'])->name('notifikasi.read');
+    Route::post('/notifikasi/read-all', [NotificationController::class, 'readAll'])->name('notifikasi.readAll');
 
     // Masyarakat routes
     Route::middleware('role:masyarakat')->group(function () {

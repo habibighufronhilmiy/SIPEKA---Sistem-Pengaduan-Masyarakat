@@ -34,8 +34,12 @@
             <div class="mb-5">
                 <label class="block text-sm font-bold text-gray-700 mb-1.5">Lokasi Kejadian <span class="text-red-500">*</span></label>
                 <div class="flex gap-2 mb-2">
-                    <input type="text" name="lokasi" id="lokasi" value="{{ old('lokasi') }}" required class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition" placeholder="Klik deteksi otomatis atau ketik manual">
-                    <button type="button" id="btnDetectLocation" class="px-5 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-accent-500/25 transition whitespace-nowrap">
+                    <input type="text" name="lokasi" id="lokasi" value="{{ old('lokasi') }}" required class="flex-1 px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 bg-gray-50/50 transition" placeholder="Klik deteksi otomatis atau ketik manual lalu klik Cari">
+                    <button type="button" id="btnSearchLocation" class="px-4 py-3 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-primary-500/25 transition whitespace-nowrap">
+                        <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                        Cari
+                    </button>
+                    <button type="button" id="btnDetectLocation" class="px-4 py-3 bg-gradient-to-r from-accent-500 to-accent-600 text-white rounded-xl text-sm font-bold hover:shadow-lg hover:shadow-accent-500/25 transition whitespace-nowrap">
                         <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                         Deteksi
                     </button>
@@ -90,50 +94,120 @@
     <script>
         let mapInstance = null;
         let marker = null;
+        let isLocating = false;
+        let watchId = null;
+
+        function reverseGeocode(lat, lng) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=id`)
+                .then(res => res.json())
+                .then(data => {
+                    const alamat = data.display_name || `${lat}, ${lng}`;
+                    document.getElementById('lokasi').value = alamat;
+                    if (marker) {
+                        marker.setPopupContent(alamat);
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('lokasi').value = `${lat}, ${lng}`;
+                });
+        }
+
+        function onMarkerDrag(e) {
+            const lat = e.target.getLatLng().lat.toFixed(6);
+            const lng = e.target.getLatLng().lng.toFixed(6);
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            reverseGeocode(lat, lng);
+        }
+
+        function applyPosition(lat, lng, accuracy) {
+            document.getElementById('latitude').value = lat.toFixed(6);
+            document.getElementById('longitude').value = lng.toFixed(6);
+
+            const status = document.getElementById('locationStatus');
+            status.textContent = 'Mengambil alamat...';
+            status.classList.remove('text-blue-500');
+
+            if (accuracy > 100) {
+                status.textContent = 'Akurasi rendah (~' + accuracy.toFixed(0) + 'm). Geser pin untuk menyesuaikan.';
+                status.classList.remove('text-green-500', 'text-blue-500');
+                status.classList.add('text-yellow-500');
+            }
+
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=id`)
+                .then(res => res.json())
+                .then(data => {
+                    const alamat = data.display_name || `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                    document.getElementById('lokasi').value = alamat;
+                    if (accuracy <= 100) {
+                        const accMsg = accuracy < 20 ? '' : ` (akurasi ~${accuracy.toFixed(0)}m)`;
+                        status.textContent = 'Lokasi berhasil terdeteksi.' + accMsg;
+                        status.classList.remove('text-yellow-500', 'text-blue-500', 'text-red-500');
+                        status.classList.add('text-green-500');
+                    } else {
+                        status.textContent = 'Akurasi rendah (~' + accuracy.toFixed(0) + 'm). Geser pin untuk menyesuaikan.';
+                        status.classList.remove('text-green-500', 'text-blue-500', 'text-red-500');
+                        status.classList.add('text-yellow-500');
+                    }
+                    showMap(lat, lng, alamat);
+                })
+                .catch(() => {
+                    document.getElementById('lokasi').value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                    if (accuracy > 100) {
+                        status.textContent = 'Akurasi rendah (~' + accuracy.toFixed(0) + 'm). Geser pin untuk menyesuaikan.';
+                        status.classList.remove('text-green-500', 'text-blue-500');
+                        status.classList.add('text-yellow-500');
+                    } else {
+                        status.textContent = 'Lokasi terdeteksi.';
+                        status.classList.remove('text-blue-500');
+                        status.classList.add('text-green-500');
+                    }
+                    showMap(lat, lng, `${lat.toFixed(6)}, ${lng.toFixed(6)}`);
+                });
+        }
 
         document.getElementById('btnDetectLocation').addEventListener('click', function() {
             const status = document.getElementById('locationStatus');
+            if (isLocating) return;
+            isLocating = true;
 
             if (!navigator.geolocation) {
                 status.textContent = 'Browser tidak mendukung deteksi lokasi. Silakan ketik manual.';
                 status.classList.add('text-red-500');
+                isLocating = false;
                 return;
             }
 
-            status.textContent = 'Mendeteksi lokasi...';
+            status.textContent = 'Mendeteksi lokasi... (pastikan GPS HP aktif)';
             status.classList.remove('text-red-500');
             status.classList.add('text-blue-500');
 
-            navigator.geolocation.getCurrentPosition(
+            let bestAccuracy = Infinity;
+            let bestPos = null;
+            let attempts = 0;
+            const maxAttempts = 30;
+
+            if (watchId !== null) {
+                navigator.geolocation.clearWatch(watchId);
+            }
+
+            watchId = navigator.geolocation.watchPosition(
                 function(position) {
+                    const accuracy = position.coords.accuracy;
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
 
-                    document.getElementById('latitude').value = lat;
-                    document.getElementById('longitude').value = lng;
-
-                    status.textContent = 'Mengambil alamat...';
-                    status.classList.remove('text-blue-500');
-
-                    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&accept-language=id`)
-                        .then(res => res.json())
-                        .then(data => {
-                            const alamat = data.display_name || `${lat}, ${lng}`;
-                            document.getElementById('lokasi').value = alamat;
-                            status.textContent = 'Lokasi berhasil terdeteksi.';
-                            status.classList.remove('text-blue-500', 'text-red-500');
-                            status.classList.add('text-green-500');
-                            showMap(lat, lng, alamat);
-                        })
-                        .catch(() => {
-                            document.getElementById('lokasi').value = `${lat}, ${lng}`;
-                            status.textContent = 'Lokasi terdeteksi (alamat tidak ditemukan).';
-                            status.classList.remove('text-blue-500');
-                            status.classList.add('text-green-500');
-                            showMap(lat, lng, `${lat}, ${lng}`);
-                        });
+                    if (accuracy < bestAccuracy) {
+                        bestAccuracy = accuracy;
+                        bestPos = { lat, lng };
+                    }
                 },
                 function(error) {
+                    if (watchId !== null) {
+                        navigator.geolocation.clearWatch(watchId);
+                        watchId = null;
+                    }
+                    isLocating = false;
                     let msg = 'Gagal mendeteksi lokasi.';
                     if (error.code === 1) msg = 'Izin lokasi ditolak. Silakan ketik manual.';
                     else if (error.code === 2) msg = 'Lokasi tidak tersedia. Silakan ketik manual.';
@@ -141,8 +215,79 @@
                     status.textContent = msg;
                     status.classList.add('text-red-500');
                 },
-                { enableHighAccuracy: true, timeout: 10000 }
+                { enableHighAccuracy: true, timeout: 7000, maximumAge: 5000 }
             );
+
+            const interval = setInterval(function() {
+                attempts++;
+                if (bestPos && (bestAccuracy <= 30 || attempts >= 15)) {
+                    clearInterval(interval);
+                    if (watchId !== null) {
+                        navigator.geolocation.clearWatch(watchId);
+                        watchId = null;
+                    }
+                    isLocating = false;
+                    applyPosition(bestPos.lat, bestPos.lng, bestAccuracy);
+                } else if (attempts >= 30) {
+                    clearInterval(interval);
+                    if (watchId !== null) {
+                        navigator.geolocation.clearWatch(watchId);
+                        watchId = null;
+                    }
+                    isLocating = false;
+                    if (bestPos) {
+                        applyPosition(bestPos.lat, bestPos.lng, bestAccuracy);
+                    } else {
+                        navigator.geolocation.getCurrentPosition(
+                            function(pos) {
+                                applyPosition(pos.coords.latitude, pos.coords.longitude, pos.coords.accuracy);
+                            },
+                            function() {
+                                status.textContent = 'Gagal mendapat lokasi. Ketik manual.';
+                                status.classList.add('text-red-500');
+                            },
+                            { enableHighAccuracy: false, timeout: 5000 }
+                        );
+                    }
+                }
+            }, 1000);
+        });
+
+        document.getElementById('btnSearchLocation').addEventListener('click', function() {
+            const q = document.getElementById('lokasi').value.trim();
+            const status = document.getElementById('locationStatus');
+            if (!q) {
+                status.textContent = 'Ketik alamat dulu.';
+                status.classList.add('text-red-500');
+                return;
+            }
+            status.textContent = 'Mencari lokasi...';
+            status.classList.remove('text-red-500');
+            status.classList.add('text-blue-500');
+
+            fetch('https://nominatim.openstreetmap.org/search?format=json&q=' + encodeURIComponent(q) + '&limit=1&accept-language=id')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length === 0) {
+                        status.textContent = 'Lokasi tidak ditemukan. Coba kata kunci lain.';
+                        status.classList.add('text-red-500');
+                        return;
+                    }
+                    const lat = parseFloat(data[0].lat).toFixed(6);
+                    const lng = parseFloat(data[0].lon).toFixed(6);
+                    const display = data[0].display_name;
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = lng;
+                    document.getElementById('lokasi').value = display;
+                    status.textContent = 'Lokasi ditemukan. Geser pin untuk menyesuaikan.';
+                    status.classList.remove('text-blue-500', 'text-red-500');
+                    status.classList.add('text-green-500');
+                    showMap(lat, lng, display);
+                })
+                .catch(() => {
+                    status.textContent = 'Gagal mencari lokasi. Coba lagi.';
+                    status.classList.add('text-red-500');
+                });
         });
 
         function showMap(lat, lng, alamat) {
@@ -150,18 +295,37 @@
             container.classList.remove('hidden');
 
             if (!mapInstance) {
-                mapInstance = L.map('miniMap').setView([lat, lng], 15);
+                mapInstance = L.map('miniMap').setView([lat, lng], 17);
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; OpenStreetMap'
                 }).addTo(mapInstance);
+
+                mapInstance.on('click', function(e) {
+                    const lat = e.latlng.lat.toFixed(6);
+                    const lng = e.latlng.lng.toFixed(6);
+                    document.getElementById('latitude').value = lat;
+                    document.getElementById('longitude').value = lng;
+                    if (marker) mapInstance.removeLayer(marker);
+                    marker = L.marker([lat, lng], { draggable: true }).addTo(mapInstance)
+                        .bindPopup('Klik untuk ubah lokasi')
+                        .openPopup();
+                    marker.on('dragend', onMarkerDrag);
+                    reverseGeocode(lat, lng);
+                    const status = document.getElementById('locationStatus');
+                    status.textContent = 'Lokasi dipilih manual. Geser pin untuk menyesuaikan.';
+                    status.classList.remove('text-green-500', 'text-blue-500', 'text-red-500');
+                    status.classList.add('text-yellow-500');
+                });
             } else {
-                mapInstance.setView([lat, lng], 15);
+                mapInstance.setView([lat, lng], 17);
             }
 
             if (marker) mapInstance.removeLayer(marker);
-            marker = L.marker([lat, lng]).addTo(mapInstance)
+            marker = L.marker([lat, lng], { draggable: true }).addTo(mapInstance)
                 .bindPopup(alamat)
                 .openPopup();
+
+            marker.on('dragend', onMarkerDrag);
         }
     </script>
 </x-app-layout>

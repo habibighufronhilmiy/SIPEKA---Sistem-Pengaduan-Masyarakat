@@ -69,12 +69,14 @@ class PengaduanController extends Controller
 
         if ($request->hasFile('media')) {
             foreach ($request->file('media') as $file) {
+                $hash = md5_file($file->getRealPath());
                 $path = $file->store('pengaduan/media', 'public');
                 $type = str_starts_with($file->getMimeType(), 'video') ? 'video' : 'foto';
                 MediaPengaduan::create([
                     'id_pengaduan' => $pengaduan->id,
                     'file_path' => $path,
                     'file_type' => $type,
+                    'file_hash' => $hash,
                 ]);
             }
         }
@@ -96,7 +98,7 @@ class PengaduanController extends Controller
 
     public function show(Pengaduan $pengaduan)
     {
-        if (Auth::user()->role === 'masyarakat' && $pengaduan->id_user !== Auth::id()) {
+        if (Auth::user()->role === 'masyarakat' && (int) $pengaduan->id_user !== (int) Auth::id()) {
             abort(403);
         }
 
@@ -106,7 +108,7 @@ class PengaduanController extends Controller
 
     public function edit(Pengaduan $pengaduan)
     {
-        if ($pengaduan->id_user !== Auth::id() || $pengaduan->status !== 'menunggu') {
+        if ((int) $pengaduan->id_user !== (int) Auth::id() || $pengaduan->status !== 'menunggu') {
             abort(403);
         }
 
@@ -116,7 +118,7 @@ class PengaduanController extends Controller
 
     public function update(Request $request, Pengaduan $pengaduan)
     {
-        if ($pengaduan->id_user !== Auth::id() || $pengaduan->status !== 'menunggu') {
+        if ((int) $pengaduan->id_user !== (int) Auth::id() || $pengaduan->status !== 'menunggu') {
             abort(403);
         }
 
@@ -137,7 +139,7 @@ class PengaduanController extends Controller
 
     public function submitDraft(Pengaduan $pengaduan)
     {
-        if ($pengaduan->id_user !== Auth::id() || !$pengaduan->draft) {
+        if ((int) $pengaduan->id_user !== (int) Auth::id() || !$pengaduan->draft) {
             abort(403);
         }
 
@@ -157,7 +159,7 @@ class PengaduanController extends Controller
 
     public function destroy(Pengaduan $pengaduan)
     {
-        if ($pengaduan->id_user !== Auth::id() || $pengaduan->status !== 'menunggu') {
+        if ((int) $pengaduan->id_user !== (int) Auth::id() || $pengaduan->status !== 'menunggu') {
             abort(403);
         }
 
@@ -170,9 +172,9 @@ class PengaduanController extends Controller
     public function downloadPdf(Pengaduan $pengaduan)
     {
         $user = Auth::user();
-        $isOwner = $pengaduan->id_user === $user->id;
+        $isOwner = (int) $pengaduan->id_user === (int) $user->id;
         $isAdmin = $user->role === 'admin';
-        $isAssignedPetugas = $user->role === 'petugas' && $pengaduan->id_petugas === $user->id;
+        $isAssignedPetugas = $user->role === 'petugas' && (int) $pengaduan->id_petugas === (int) $user->id;
 
         if (!$isOwner && !$isAdmin && !$isAssignedPetugas) {
             abort(403);
@@ -219,7 +221,7 @@ class PengaduanController extends Controller
 
     public function storeTanggapanMasyarakat(Request $request, Pengaduan $pengaduan)
     {
-        if ($pengaduan->id_user !== Auth::id()) {
+        if ((int) $pengaduan->id_user !== (int) Auth::id()) {
             abort(403);
         }
 
@@ -348,7 +350,7 @@ class PengaduanController extends Controller
 
     public function storeRating(Request $request, Pengaduan $pengaduan)
     {
-        if ($pengaduan->status !== 'selesai' || $pengaduan->id_user !== Auth::id()) {
+        if ($pengaduan->status !== 'selesai' || (int) $pengaduan->id_user !== (int) Auth::id()) {
             abort(403);
         }
 

@@ -181,7 +181,7 @@
     <script>
         const lat = {{ $pengaduan->latitude }};
         const lng = {{ $pengaduan->longitude }};
-        const map = L.map('detailMap').setView([lat, lng], 15);
+        const map = L.map('detailMap').setView([lat, lng], 17);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         }).addTo(map);

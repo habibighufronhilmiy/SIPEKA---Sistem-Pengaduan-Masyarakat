@@ -172,11 +172,11 @@
     <script>
         const lat = {{ $pengaduan->latitude }};
         const lng = {{ $pengaduan->longitude }};
-        const map = L.map('detailMap').setView([lat, lng], 15);
+        const map = L.map('detailMap').setView([lat, lng], 17);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         }).addTo(map);
-        L.marker([lat, lng]).addTo(map)
+        L.marker([lat, lng], { draggable: false }).addTo(map)
             .bindPopup(@js($pengaduan->lokasi ?? 'Lokasi Kejadian'))
             .openPopup();
     </script>

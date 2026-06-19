@@ -105,7 +105,7 @@ class PetugasController extends Controller
             return back()->with('error', 'Pengaduan harus diverifikasi terlebih dahulu.');
         }
 
-        if ($pengaduan->id_petugas && $pengaduan->id_petugas !== Auth::id()) {
+        if ($pengaduan->id_petugas && (int) $pengaduan->id_petugas !== (int) Auth::id()) {
             return back()->with('error', 'Pengaduan ini sedang ditangani oleh petugas lain.');
         }
 
@@ -148,7 +148,7 @@ class PetugasController extends Controller
 
     public function selesai(Request $request, Pengaduan $pengaduan)
     {
-        if ($pengaduan->id_petugas !== Auth::id()) {
+        if ((int) $pengaduan->id_petugas !== (int) Auth::id()) {
             return back()->with('error', 'Anda tidak ditugaskan untuk menangani pengaduan ini.');
         }
 
